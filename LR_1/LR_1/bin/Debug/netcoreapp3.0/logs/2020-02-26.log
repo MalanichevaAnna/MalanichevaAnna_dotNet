@@ -1,0 +1,6 @@
+2020-02-26 08:56:03.6374 ERROR Error. Message: 
+2020-02-26 08:58:58.4133 ERROR Error. Message: The conversion cannot be performed.
+    Text: ''
+    MemberType: 
+    TypeConverter: 'CsvHelper.TypeConversion.Int32Converter'
+2020-02-26 09:00:48.2631 ERROR Error. Message: 

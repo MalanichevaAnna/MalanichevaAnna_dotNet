@@ -1,0 +1,8 @@
+{
+  "profiles": {
+		"LR_1": {
+			"commandName": "Project",
+			"commandLineArgs": "-i 2_TestFile.csv -o AnnaXlsx -f Xlsx"
+		}
+  }
+}
