@@ -4,13 +4,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using CsvHelper;
-using LR_1.DL.ReaderWriter;
 
 namespace LR_1.Domain
 {
-    public class Reader : IReaderFile
+    public class CsvReader : DL.ReaderWriter.IReader
     {
-        public IEnumerable<Student> ReaderFile(string path)
+        public IEnumerable<Student> Reader(string path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -20,7 +19,7 @@ namespace LR_1.Domain
             var students = new List<Student>();
 
             using var reader = new StreamReader(path);
-            using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+            using var csv = new CsvHelper.CsvReader(reader, CultureInfo.InvariantCulture);
 
             csv.Read();
             csv.ReadHeader();

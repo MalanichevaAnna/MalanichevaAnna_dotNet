@@ -4812,11 +4812,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\3 курс\\2 семестр\\ИГИ\\LR_1\\LR_1\\LR_1.csproj",
+      "projectUniqueName": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_1\\LR_1\\LR_1.csproj",
       "projectName": "LR_1",
-      "projectPath": "D:\\3 курс\\2 семестр\\ИГИ\\LR_1\\LR_1\\LR_1.csproj",
+      "projectPath": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_1\\LR_1\\LR_1.csproj",
       "packagesPath": "C:\\Users\\Anna\\.nuget\\packages\\",
-      "outputPath": "D:\\3 курс\\2 семестр\\ИГИ\\LR_1\\LR_1\\obj\\",
+      "outputPath": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_1\\LR_1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

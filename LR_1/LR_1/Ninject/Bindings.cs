@@ -16,7 +16,7 @@ namespace LR_1.BL.Ninject
 
         public override void Load()
         {
-            Bind<IReaderFile>().To<Reader>();
+            Bind<IReader>().To<CsvReader>();
             Bind<FileProcessor>().To<FileProcessor>().InSingletonScope();
             switch (_format)
             {
