@@ -10,8 +10,9 @@ namespace LR_1.BL
     public class FileProcessor
     {
         private readonly IWriter _writer;
-        private readonly IReaderFile _reader;
-        public FileProcessor(IWriter writer, IReaderFile reader)
+        private readonly IReader _reader;
+
+        public FileProcessor(IWriter writer, IReader reader)
         {
             _writer = writer ?? throw new ArgumentNullException(nameof(writer));
             _reader = reader ?? throw new ArgumentNullException(nameof(reader));
@@ -24,7 +25,7 @@ namespace LR_1.BL
                 throw new ArgumentNullException(nameof(inputFile));
             }
 
-            return _reader.ReaderFile(inputFile);
+            return _reader.Reader(inputFile);
         }
 
         public void Write(string outputFile, IEnumerable<Student> studentInfos)

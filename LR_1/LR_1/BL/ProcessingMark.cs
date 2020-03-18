@@ -44,6 +44,5 @@ namespace LR_1.Domain
         }
         private static double GetAverageMark(this IEnumerable<Subject> subjects)
             => subjects.Sum(subject => subject.Mark) / subjects.Count();
-
     }
 }

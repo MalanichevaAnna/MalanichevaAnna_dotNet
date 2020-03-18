@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace LR_1.DL.ReaderWriter
 {
-    public interface IReaderFile
+    public interface IReader
     {
-        public IEnumerable<Student> ReaderFile(string path);
+        public IEnumerable<Student> Reader(string path);
     }
 }

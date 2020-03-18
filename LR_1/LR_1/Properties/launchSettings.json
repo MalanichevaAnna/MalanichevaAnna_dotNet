@@ -2,7 +2,7 @@
   "profiles": {
 		"LR_1": {
 			"commandName": "Project",
-			"commandLineArgs": "-i 2_TestFile.csv -o AnnaXlsx -f Xlsx"
+			"commandLineArgs": "-i 6_TestFile.csv -o AnnaJson -f Json"
 		}
   }
 }

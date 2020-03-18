@@ -26,7 +26,7 @@ namespace LR_1
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "An exception occurs during the execution.");
+                logger.Error(ex, ex.Message);
             }
         }
     }
