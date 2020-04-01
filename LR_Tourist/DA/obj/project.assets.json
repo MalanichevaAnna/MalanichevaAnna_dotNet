@@ -1029,11 +1029,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\3 курс\\2 семестр\\ИГИ\\LR_Tourist\\DA\\DA.csproj",
+      "projectUniqueName": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_Tourist\\DA\\DA.csproj",
       "projectName": "DA",
-      "projectPath": "D:\\3 курс\\2 семестр\\ИГИ\\LR_Tourist\\DA\\DA.csproj",
+      "projectPath": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_Tourist\\DA\\DA.csproj",
       "packagesPath": "C:\\Users\\Anna\\.nuget\\packages\\",
-      "outputPath": "D:\\3 курс\\2 семестр\\ИГИ\\LR_Tourist\\DA\\obj\\",
+      "outputPath": "D:\\3 курс\\2 семестр\\ИГИ\\MalanichevaAnna_dotNet\\LR_Tourist\\DA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

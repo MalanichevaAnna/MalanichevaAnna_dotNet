@@ -1,0 +1,8 @@
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\DA.dll
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.csprojAssemblyReference.cache
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.AssemblyInfoInputs.cache
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.AssemblyInfo.cs
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\BLL.deps.json
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\BLL.dll
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\DA.pdb
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.csproj.CopyComplete

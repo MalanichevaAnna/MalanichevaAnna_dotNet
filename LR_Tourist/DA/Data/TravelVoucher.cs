@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DA.Data
 {
@@ -19,6 +17,8 @@ namespace DA.Data
         public int IdHotel { get; set; }
 
         public int IdStaff { get; set; }
+
+        public int IdUser { get; set; }
 
     }
 }
