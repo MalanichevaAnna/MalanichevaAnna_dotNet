@@ -7,9 +7,9 @@ namespace BLL.Interfaces
     {
         void MakeOrder(ProfileOrder profileOrder);
 
-        ProfileTravelVoucher GetTravelVoucher(int? id);
+        ProfileUser GetTravelVoucher(int? id);
 
-        IEnumerable<ProfileTravelVoucher> GetTravelVouchers();
+        IEnumerable<ProfileUser> GetTravelVouchers();
 
         void Dispose();
     }

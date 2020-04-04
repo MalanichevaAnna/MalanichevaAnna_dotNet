@@ -18,7 +18,7 @@ namespace BLL._1Новая_папка
             
             CreateMap<ProfileServices, DA.Data.Services>().ReverseMap();
             
-            CreateMap<ProfileTravelVoucher, TravelVoucher>().ReverseMap();
+            CreateMap<ProfileUser, TravelVoucher>().ReverseMap();
         }
     }
 }

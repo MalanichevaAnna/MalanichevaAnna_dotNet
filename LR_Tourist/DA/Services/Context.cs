@@ -1,8 +1,5 @@
 ﻿using DA.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DA.Services
 {

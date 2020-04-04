@@ -12,12 +12,12 @@ namespace BLL.Services
             throw new NotImplementedException();
         }
 
-        public ProfileTravelVoucher GetTravelVoucher(int? id)
+        public ProfileUser GetTravelVoucher(int? id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ProfileTravelVoucher> GetTravelVouchers()
+        public IEnumerable<ProfileUser> GetTravelVouchers()
         {
             throw new NotImplementedException();
         }

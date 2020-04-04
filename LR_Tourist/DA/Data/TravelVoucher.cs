@@ -12,13 +12,13 @@ namespace DA.Data
 
         public int Price { get; set; }
 
-        public int IdServices { get; set; }
+        public int ServicesId { get; set; }
 
-        public int IdHotel { get; set; }
+        public int HotelId { get; set; }
 
-        public int IdStaff { get; set; }
+        public int StaffId { get; set; }
 
-        public int IdUser { get; set; }
+        public int UserId { get; set; }
 
     }
 }
