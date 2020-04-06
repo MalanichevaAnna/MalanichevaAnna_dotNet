@@ -2,8 +2,9 @@
 
 namespace BLL.Model
 {
-    public class ProfileUser : ProfileEntityBase
-    { 
+    public class ProfileTravelVoucher
+    {
+        public int Id { get; set; }
         public string Country { get; set; }
 
         public DateTime Arrival { get; set; }

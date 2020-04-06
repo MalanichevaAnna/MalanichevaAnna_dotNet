@@ -6,11 +6,11 @@ namespace BLL.Interfaces
 {
     public interface ITravelVoucher
     {
-        void MakeOrder(ProfileUser profileTravelVoucher );
+        void MakeOrder(ProfileTravelVoucher profileTravelVoucher );
 
-        ProfileUser GetUser(int? id);
+        ProfileTravelVoucher GetTravelVoucher(int? id);
 
-        IEnumerable<ProfileUser> GetUsers();
+        IEnumerable<ProfileTravelVoucher> GetTravelVouchers();
 
     }
 }

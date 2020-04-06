@@ -5,7 +5,7 @@ namespace BLL.Model
     {
         string FirstName { get; set; }
 
-        string SecondName { get; set; }
+        string LastName { get; set; }
 
         string MiddleName { get; set; }
 

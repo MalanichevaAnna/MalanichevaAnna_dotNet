@@ -1,11 +1,12 @@
 ﻿
 namespace BLL.Model
 {
-    public class ProfileStaff : ProfileEntityBase , IProfilePerson
+    public class ProfileStaff : IProfilePerson
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         
-        public string SecondName { get; set; }
+        public string LastName { get; set; }
 
         public string MiddleName { get; set; }
 

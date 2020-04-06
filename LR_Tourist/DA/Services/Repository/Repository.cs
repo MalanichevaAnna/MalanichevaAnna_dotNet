@@ -1,4 +1,5 @@
 ﻿using DA.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,20 @@ namespace DA.Services.Repository
         public IEnumerable<T> Find(Func<T, bool> predicate)
         {
             return Context.Set<T>().Where(predicate).ToList();
+        }
+
+        public T Get(int id)
+        {
+            return Context.Set<T>().Find(id);
+        }
+
+        public void Delete(int id)
+        {
+            var item = Context.Set<T>().Find(id);
+            if(item != null)
+            {
+                 Context.Set<T>().Remove(item);
+            }
         }
     }
 }
