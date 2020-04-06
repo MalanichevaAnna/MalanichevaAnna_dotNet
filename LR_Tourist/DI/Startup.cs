@@ -1,8 +1,5 @@
-﻿using BLL.Interfaces;
-using BLL.Model;
+﻿using BLL.Model;
 using BLL.Services;
-using DA.Data;
-using DA.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

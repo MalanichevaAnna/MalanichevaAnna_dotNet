@@ -10,41 +10,41 @@ using System.Text;
 
 namespace BLL.Services
 {
-    public class StaffService: IService<ProfileStaff>
+    public class StaffService/*: IService<ProfileStaff>*/
     {
-        IRepository<ProfileStaff> repoStaff { get; set; }
+        //IRepository<ProfileStaff> repoStaff { get; set; }
 
-        StaffService(IRepository<ProfileStaff> repositoryStaff)
-        {
-            repoStaff = repositoryStaff;
-        }
+        //StaffService(IRepository<ProfileStaff> repositoryStaff)
+        //{
+        //    repoStaff = repositoryStaff;
+        //}
 
-        ProfileStaff IService<ProfileStaff>.GetItem(int? id)
-        {
-            if (id == null)
-                throw new ValidationException("Не установлено id пользователь ", "");
-            var staff = repoStaff.Get(id.Value);
-            if (staff == null)
-                throw new ValidationException("Пользователь не найден", "");
+        //ProfileStaff IService<ProfileStaff>.GetItem(int? id)
+        //{
+        //    if (id == null)
+        //        throw new ValidationException("Не установлено id пользователь ", "");
+        //    var staff = repoStaff.Get(id.Value);
+        //    if (staff == null)
+        //        throw new ValidationException("Пользователь не найден", "");
 
-            return new ProfileStaff
-            {
-                Id = staff.Id,
-                FirstName = staff.FirstName,
-                LastName = staff.LastName,
-                MiddleName = staff.MiddleName,
-                Phone = staff.Phone,
-                Salary = staff.Salary,
-                Role = staff.Role,
-                PersonalNumber = staff.PersonalNumber,
-            };
-        }
+        //    return new ProfileStaff
+        //    {
+        //        Id = staff.Id,
+        //        FirstName = staff.FirstName,
+        //        LastName = staff.LastName,
+        //        MiddleName = staff.MiddleName,
+        //        Phone = staff.Phone,
+        //        Salary = staff.Salary,
+        //        Role = staff.Role,
+        //        PersonalNumber = staff.PersonalNumber,
+        //    };
+        //}
 
-        IEnumerable<ProfileStaff> IService<ProfileStaff>.GetItems()
-        {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Staff, ProfileStaff>()).CreateMapper();
-            return mapper.Map<IEnumerable<Staff>, List<ProfileStaff>>(repoStaff.GetAll());
-        }
+        //IEnumerable<ProfileStaff> IService<ProfileStaff>.GetItems()
+        //{
+        //    var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Staff, ProfileStaff>()).CreateMapper();
+        //    return mapper.Map<IEnumerable<Staff>, List<ProfileStaff>>(repoStaff.GetAll());
+        //}
 
         //public void Create(Staff item)
         //{

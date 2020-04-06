@@ -9,12 +9,11 @@ namespace DA.Services.Repository
     public class Repository<T> : IRepository<T>
         where T : class
     {
-         public Context<T> Context { get; set; }
-        //public readonly IRepository<T> repo;
+        public Context Context { get; set; }
         
         public Repository()
         {
-            Context = new Context<T>();
+            Context = new Context();
         }
 
         IEnumerable<T> IRepository<T>.GetAll()

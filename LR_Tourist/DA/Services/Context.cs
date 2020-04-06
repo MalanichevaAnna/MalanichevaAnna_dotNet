@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DA.Services
 {
-    public class Context<T> : DbContext
-        where T : class
+    public class Context : DbContext
     {
         public DbSet<TravelVoucher> TravelVouchers { get; set; }
 
@@ -20,9 +19,10 @@ namespace DA.Services
         {
             Database.EnsureCreated();
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=helloappdb;Trusted_Connection=True;");
-        //}
+       
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Database=Tourist;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+        }
     }
 }
