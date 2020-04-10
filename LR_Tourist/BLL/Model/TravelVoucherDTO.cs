@@ -2,7 +2,7 @@
 
 namespace BLL.Model
 {
-    public class ProfileTravelVoucher
+    public class TravelVoucherDTO
     {
         public int Id { get; set; }
         public string Country { get; set; }
@@ -20,6 +20,11 @@ namespace BLL.Model
         public int StaffId { get; set; }
 
         public int UserId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Country} {Arrival} {Departure} {Price} ";
+        }
 
     }
 }

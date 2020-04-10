@@ -1,26 +1,57 @@
-﻿using BLL.Interfaces;
-using BLL.Model;
+﻿using BLL.Model;
+using BLL.Services;
 using BLL.ValidException;
 using System.Collections.Generic;
 
 namespace TouristConsole
 {
-    class PresentationHotel
+    public class PresentationHotel
     {
-        public IEnumerable<ProfileHotel> GetCollectionHotels(IService<ProfileHotel> serviceHotel)
+        private readonly HotelService serviceHotel;
+
+        public PresentationHotel(HotelService serviceHotel)
         {
-            IEnumerable<ProfileHotel> usersDTO = serviceHotel.GetItems();
+            this.serviceHotel = serviceHotel;
+        }
+
+        public IEnumerable<HotelDTO> GetCollectionHotels()
+        {
+            IEnumerable<HotelDTO> usersDTO = serviceHotel.GetItems();
             return usersDTO;
         }
-        public ProfileHotel GetHotel(IService<ProfileHotel> serviceHotel, int? id)
+        public HotelDTO GetHotel(int? id)
         {
-            return serviceUser.GetItem(id);
+            return serviceHotel.GetItem(id);
         }
-        public string CreateHotel(ICRUDService<ProfileHotel> serviceUser, ProfileHotel profileUser)
+        public string CreateHotel(HotelDTO profileHotel)
         {
             try
             {
-                serviceUser.Create(profileUser);
+                serviceHotel.Create(profileHotel);
+                return "Успешно добваено";
+            }
+            catch (ValidationException ex)
+            {
+                throw new ValidationException(ex.Property, ex.Message);
+            }
+        }
+        public string UpdateHotel(HotelDTO profileHotel)
+        {
+            try
+            {
+                serviceHotel.Update(profileHotel);
+                return "Успешно добваено";
+            }
+            catch (ValidationException ex)
+            {
+                throw new ValidationException(ex.Property, ex.Message);
+            }
+        }
+        public string DeleteHaotel(HotelDTO profileHotel)
+        {
+            try
+            {
+                serviceHotel.Delete(profileHotel);
                 return "Успешно добваено";
             }
             catch (ValidationException ex)

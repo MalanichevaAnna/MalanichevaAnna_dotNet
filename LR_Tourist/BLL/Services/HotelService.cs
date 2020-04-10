@@ -3,22 +3,23 @@ using BLL.Interfaces;
 using BLL.Model;
 using BLL.ValidException;
 using DA.Data;
-using DA.Repository;
-using System;
+using DA.Services.Repository;
 using System.Collections.Generic;
 
 namespace BLL.Services
 {
-    public class HotelService : IService<ProfileHotel>,ICRUDService<Hotel>
+    public class HotelService : IService<HotelDTO>,ICRUDService<HotelDTO>
     {
         IRepository<Hotel> repoHotel { get; set; }
+        private readonly IMapper _mapper;
 
-        HotelService(IRepository<Hotel> repositoryHotel)
+        public HotelService(IRepository<Hotel> repositoryHotel, IMapper mapper)
         {
             repoHotel = repositoryHotel;
+            _mapper = mapper;
         }
 
-        public ProfileHotel GetItem(int? id)
+        public HotelDTO GetItem(int? id)
         {
             if (id == null)
             {
@@ -32,7 +33,7 @@ namespace BLL.Services
                 throw new ValidationException("Услуга не найден", "");
             }
 
-            return new ProfileHotel
+            return new HotelDTO
             {
                 Id = hotel.Id,
                 NameHotel = hotel.NameHotel,
@@ -42,13 +43,12 @@ namespace BLL.Services
 
         }
 
-        public IEnumerable<ProfileHotel> GetItems()
+        public IEnumerable<HotelDTO> GetItems()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Hotel, ProfileHotel>()).CreateMapper();
-            return mapper.Map<IEnumerable<Hotel>, List<ProfileHotel>>(repoHotel.GetAll());
+              return _mapper.Map<IEnumerable<Hotel>, List<HotelDTO>>(repoHotel.GetAll());
         }
 
-        public void Create(Hotel item)
+        public void Create(HotelDTO item)
         {
             if(item == null)
             {
@@ -56,12 +56,12 @@ namespace BLL.Services
             }
             else
             {
-                repoHotel.Create(item);
+                repoHotel.Create(_mapper.Map<Hotel>(item));
                 Save();
             }
         }
 
-        public void Update(Hotel item)
+        public void Update(HotelDTO item)
         {
             if (item == null)
             {
@@ -69,12 +69,12 @@ namespace BLL.Services
             }
             else
             {
-                repoHotel.Update(item);
+                repoHotel.Update(_mapper.Map<Hotel>(item));
                 Save();
             }
         }
 
-        public void Delete(Hotel item)
+        public void Delete(HotelDTO item)
         {
             if (item == null)
             {
@@ -82,7 +82,7 @@ namespace BLL.Services
             }
             else
             {
-                repoHotel.Delete(item);
+                repoHotel.Delete(_mapper.Map<Hotel>(item));
                 Save();
             }
         }

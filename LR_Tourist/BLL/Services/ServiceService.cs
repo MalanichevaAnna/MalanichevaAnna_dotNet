@@ -4,21 +4,21 @@ using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
 using BLL.ValidException;
-using DA.Data;
-using DA.Repository;
+using DA.Services.Repository;
 
 namespace BLL.Services
 {
-    public class ServiceService : IService<ProfileServices>, ICRUDService<DA.Data.Services>
+    public class ServiceService : IService<ServicesDTO>, ICRUDService<ServicesDTO>
     {
         IRepository<DA.Data.Services> repoServices { get; set; }
-
-        ServiceService(IRepository<DA.Data.Services> repositoryServices)
+        private readonly IMapper _mapper;
+        public ServiceService(IRepository<DA.Data.Services> repositoryServices, IMapper mapper)
         {
             repoServices = repositoryServices;
+            _mapper = mapper;
         }
 
-        public ProfileServices GetItem(int? id)
+        public ServicesDTO GetItem(int? id)
         {
             if (id == null)
             {
@@ -32,20 +32,19 @@ namespace BLL.Services
                 throw new ValidationException("Услуга не найден", "");
             }
 
-            return new ProfileServices
+            return new ServicesDTO
             {
                 Id = services.Id,
                 NameServices = services.NameServices,
             };
         }
 
-        public IEnumerable<ProfileServices> GetItems()
+        public IEnumerable<ServicesDTO> GetItems()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<DA.Data.Services, ProfileServices>()).CreateMapper();
-            return mapper.Map<IEnumerable<DA.Data.Services>, List<ProfileServices>>(repoServices.GetAll());
+            return _mapper.Map<IEnumerable<DA.Data.Services>, List<ServicesDTO>>(repoServices.GetAll());
         }
 
-        public void Create(DA.Data.Services item)
+        public void Create(ServicesDTO item)
         {
 
             if (item == null)
@@ -54,12 +53,12 @@ namespace BLL.Services
             }
             else
             {
-                repoServices.Create(item);
+                repoServices.Create(_mapper.Map<DA.Data.Services>(item));
                 Save();
             }
         }
 
-        public void Update(DA.Data.Services item)
+        public void Update(ServicesDTO item)
         {
             if (item == null)
             {
@@ -67,12 +66,12 @@ namespace BLL.Services
             }
             else
             {
-                repoServices.Update(item);
+                repoServices.Update(_mapper.Map <DA.Data.Services>(item));
                 Save();
             }
         }
 
-        public void Delete(DA.Data.Services item)
+        public void Delete(ServicesDTO item)
         {
             if (item == null)
             {
@@ -80,7 +79,7 @@ namespace BLL.Services
             }
             else
             {
-                repoServices.Delete(item);
+                repoServices.Delete(_mapper.Map<DA.Data.Services>(item));
                 Save();
             }
         }

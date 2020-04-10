@@ -3,24 +3,24 @@ using BLL.Interfaces;
 using BLL.Model;
 using BLL.ValidException;
 using DA.Data;
-using DA.Repository;
-using System;
+using DA.Services.Repository;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BLL.Services
 {
-    public class TravelVoucherServices : ITravelVoucher, ICRUDService<TravelVoucher>
+    public class TravelVoucherService : ITravelVoucher, ICRUDService<Model.TravelVoucherDTO>
     {
         IRepository<User> repoUser { get; set; }
+        private readonly IMapper _mapper;
 
-        IRepository<TravelVoucher> repoTravelVoucher { get; set; }
-        TravelVoucherServices(IRepository<User> repositoryUser, IRepository<TravelVoucher> repositoryTravelVoucher)
+        IRepository<DA.Data.TravelVoucher> repoTravelVoucher { get; set; }
+        public TravelVoucherService(IRepository<User> repositoryUser, IRepository<DA.Data.TravelVoucher> repositoryTravelVoucher, IMapper mapper)
         {
             repoUser = repositoryUser;
             repoTravelVoucher = repositoryTravelVoucher;
+            _mapper = mapper;
         }
-        public ProfileTravelVoucher GetTravelVoucher(int? id)
+        public TravelVoucherDTO GetTravelVoucher(int? id)
         {
             if (id == null)
                 throw new ValidationException("Не установлено id путевки ", "");
@@ -28,7 +28,7 @@ namespace BLL.Services
             if (travelVoucher == null)
                 throw new ValidationException("Путевка не найден", "");
 
-            return new ProfileTravelVoucher {
+            return new TravelVoucherDTO {
                 Country = travelVoucher.Country,
                 Arrival = travelVoucher.Arrival,
                 Departure = travelVoucher.Departure,
@@ -40,13 +40,12 @@ namespace BLL.Services
             };
         }
 
-        public IEnumerable<ProfileTravelVoucher> GetTravelVouchers()
+        public IEnumerable<Model.TravelVoucherDTO> GetTravelVouchers()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<TravelVoucher, ProfileTravelVoucher>()).CreateMapper();
-            return mapper.Map<IEnumerable<TravelVoucher>, List<ProfileTravelVoucher>>(repoTravelVoucher.GetAll());
+            return _mapper.Map<IEnumerable<TravelVoucher>, List<TravelVoucherDTO>>(repoTravelVoucher.GetAll());
         }
 
-        public void MakeOrder(ProfileTravelVoucher profileTravelVoucher,ProfileUser profileUser)
+        public void MakeOrder(Model.TravelVoucherDTO profileTravelVoucher,UserDTO profileUser)
         {
             //var user = repoUser.Get(profileUser.Id);
 
@@ -54,7 +53,7 @@ namespace BLL.Services
             if (profileUser == null)
                 throw new ValidationException("Пользователь не найден", "");
            
-            var order = new ProfileTravelVoucher
+            var order = new Model.TravelVoucherDTO
             {
                 Country = profileTravelVoucher.Country ,
                 Arrival = profileTravelVoucher.Arrival,
@@ -69,7 +68,7 @@ namespace BLL.Services
             repoTravelVoucher.Save();
         }
 
-        public void Create(TravelVoucher item)
+        public void Create(Model.TravelVoucherDTO item)
         {
             if (item == null)
             {
@@ -77,12 +76,12 @@ namespace BLL.Services
             }
             else
             {
-                repoTravelVoucher.Create(item);
+                repoTravelVoucher.Create(_mapper.Map<DA.Data.TravelVoucher>(item));
                 Save();
             }
         }
 
-        public void Update(TravelVoucher item)
+        public void Update(Model.TravelVoucherDTO item)
         {
             if (item == null)
             {
@@ -90,12 +89,12 @@ namespace BLL.Services
             }
             else
             {
-                repoTravelVoucher.Update(item);
+                repoTravelVoucher.Update(_mapper.Map<DA.Data.TravelVoucher>(item));
                 Save();
             }
         }
 
-        public void Delete(TravelVoucher item)
+        public void Delete(Model.TravelVoucherDTO item)
         {
             if (item == null)
             {
@@ -103,7 +102,7 @@ namespace BLL.Services
             }
             else
             {
-                repoTravelVoucher.Delete(item);
+                repoTravelVoucher.Delete(_mapper.Map<DA.Data.TravelVoucher>(item));
                 Save();
             }
         }

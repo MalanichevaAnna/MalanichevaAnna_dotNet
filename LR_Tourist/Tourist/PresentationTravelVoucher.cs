@@ -1,14 +1,22 @@
-﻿using BLL.Interfaces;
-using BLL.Model;
+﻿using BLL.Model;
+using BLL.Services;
 using BLL.ValidException;
 using System.Collections.Generic;
 
 namespace TouristConsole
 {
-    class PresentationTravelVoucher
+    public class PresentationTravelVoucher
     {
-     
-        public string MakeOrder(ITravelVoucher serviceTravelVoucher, ProfileTravelVoucher profileTravelVoucher, ProfileUser profileUser)
+        private readonly TravelVoucherService serviceTravelVoucher;
+        private readonly UserService userService;
+
+        public PresentationTravelVoucher(TravelVoucherService serviceTravelVoucher, UserService userService)
+        {
+            this.serviceTravelVoucher = serviceTravelVoucher;
+            this.userService = userService;
+        }
+
+        public string MakeOrder(TravelVoucherDTO profileTravelVoucher, UserDTO profileUser)
         {
             try
             {
@@ -21,18 +29,18 @@ namespace TouristConsole
             }
         }
 
-        public IEnumerable<ProfileTravelVoucher> GetCollectionTravelVouchers(ITravelVoucher travelVoucherService)
+        public IEnumerable<TravelVoucherDTO> GetCollectionTravelVouchers()
         {
-            IEnumerable<ProfileTravelVoucher> travelVouchersDTO = travelVoucherService.GetTravelVouchers();
+            IEnumerable<TravelVoucherDTO> travelVouchersDTO = serviceTravelVoucher.GetTravelVouchers();
             return travelVouchersDTO;
         }
 
-        public ProfileTravelVoucher GetTravelVouher(ITravelVoucher travelVoucherService, int? id)
+        public TravelVoucherDTO GetTravelVouher(int? id)
         {
-            return travelVoucherService.GetTravelVoucher(id);
+            return serviceTravelVoucher.GetTravelVoucher(id);
         }
 
-        public string CreateTravelVoucher(ICRUDService<ProfileTravelVoucher> serviceTravelVoucher, ProfileTravelVoucher profileTravelVoucher)
+        public string CreateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
         {
             try
             {
@@ -45,7 +53,7 @@ namespace TouristConsole
             }
         }
 
-        public string UpdateTravelVoucher(ICRUDService<ProfileTravelVoucher> serviceTravelVoucher, ProfileTravelVoucher profileTravelVoucher)
+        public string UpdateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
         {
             try
             {
@@ -58,7 +66,7 @@ namespace TouristConsole
             }
         }
 
-        public string DeleteTravelVoucher(ICRUDService<ProfileTravelVoucher> serviceTravelVoucher, ProfileTravelVoucher profileTravelVoucher)
+        public string DeleteTravelVoucher(TravelVoucherDTO profileTravelVoucher)
         {
             try
             {

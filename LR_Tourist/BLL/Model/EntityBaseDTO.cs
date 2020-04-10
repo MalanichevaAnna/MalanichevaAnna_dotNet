@@ -1,7 +1,7 @@
 ﻿
 namespace BLL.Model
 {
-    public class ProfileEntityBase
+    public class EntityBaseDTO
     {
         public int Id { get; set; }
     }

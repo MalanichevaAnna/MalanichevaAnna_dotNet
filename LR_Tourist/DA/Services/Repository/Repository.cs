@@ -1,6 +1,4 @@
-﻿using DA.Repository;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,9 +52,9 @@ namespace DA.Services.Repository
         public void Delete(int id)
         {
             var item = Context.Set<T>().Find(id);
-            if(item != null)
+            if (item != null)
             {
-                 Context.Set<T>().Remove(item);
+                Context.Set<T>().Remove(item);
             }
         }
     }

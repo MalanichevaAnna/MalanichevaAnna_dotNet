@@ -1,7 +1,7 @@
 ﻿
 namespace BLL.Model
 {
-    public class ProfileHotel
+    public class HotelDTO
     {
         public int Id { get; set; }
         public string NameHotel { get; set; }
@@ -9,6 +9,11 @@ namespace BLL.Model
         public int Star { get; set; }
 
         public string Phone { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {NameHotel} {Star} {Phone}";
+        }
 
     }
 }

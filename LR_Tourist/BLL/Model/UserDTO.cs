@@ -1,21 +1,22 @@
 ﻿
 namespace BLL.Model
 {
-    public class ProfileStaff : IProfilePerson
+    public class UserDTO : IPersonDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
-        
+
         public string LastName { get; set; }
 
         public string MiddleName { get; set; }
 
-        public string Role { get; set; }
-
         public string Phone { get; set; }
 
-        public string PersonalNumber { get; set; }
+        public string Address { get; set; }
 
-        public int Salary { get; set; }
+        public override string ToString()
+        {
+            return $"{Id} {FirstName} {LastName} {MiddleName} {Phone} {Address}";
+        }
     }
 }

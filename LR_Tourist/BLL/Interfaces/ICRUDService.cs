@@ -1,6 +1,6 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BLL.Interfaces
 {
@@ -12,6 +12,10 @@ namespace BLL.Interfaces
         void Update(T item);
 
         void Delete(T item);
+
+       // void Delete(int id);
+
+        IEnumerable<T> Find(Func<T, Boolean> predicate);
 
         void Save();
 

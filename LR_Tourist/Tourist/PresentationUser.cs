@@ -1,22 +1,29 @@
-﻿using BLL.Interfaces;
-using BLL.Model;
+﻿using BLL.Model;
+using BLL.Services;
 using BLL.ValidException;
 using System.Collections.Generic;
 
 namespace TouristConsole
 {
-    class PresentationUser
+    public class PresentationUser
     {
-        public IEnumerable<ProfileUser> GetCollectionUsers(IService<ProfileUser> serviceUser)
+        private readonly UserService serviceUser;
+
+        public PresentationUser(UserService serviceUser)
         {
-            IEnumerable<ProfileUser> usersDTO = serviceUser.GetItems();
+            this.serviceUser = serviceUser;
+        }
+
+        public  IEnumerable<UserDTO> GetCollectionUsers()
+        {
+            IEnumerable<UserDTO> usersDTO = serviceUser.GetItems();
             return usersDTO;
         }
-        public ProfileUser GetUser(IService<ProfileUser> serviceUser,int? id)
+        public UserDTO GetUser(int? id)
         {
             return serviceUser.GetItem(id);
         }
-        public string CreateUser(ICRUDService<ProfileUser> serviceUser, ProfileUser profileUser)
+        public string CreateUser(UserDTO profileUser)
         {
             try
             {
@@ -28,7 +35,7 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-        public string UpdataUser(ICRUDService<ProfileUser> serviceUser, ProfileUser profileUser)
+        public string UpdateUser(UserDTO profileUser)
         {
             try
             {
@@ -40,7 +47,7 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-        public string DeleteUser(ICRUDService<ProfileUser> serviceUser, ProfileUser profileUser)
+        public string DeleteUser(UserDTO profileUser)
         {
             try
             {

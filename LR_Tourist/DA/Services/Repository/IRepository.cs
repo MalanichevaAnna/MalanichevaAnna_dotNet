@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DA.Repository
+namespace DA.Services.Repository
 {
     public interface IRepository<T>
         where T : class

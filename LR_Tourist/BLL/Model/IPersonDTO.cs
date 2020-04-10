@@ -1,7 +1,7 @@
 ﻿
 namespace BLL.Model
 {
-    public interface IProfilePerson
+    public interface IPersonDTO
     {
         string FirstName { get; set; }
 

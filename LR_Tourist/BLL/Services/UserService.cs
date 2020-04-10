@@ -3,21 +3,23 @@ using BLL.Interfaces;
 using BLL.Model;
 using BLL.ValidException;
 using DA.Data;
-using DA.Repository;
+using DA.Services.Repository;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace BLL.Services
 {
-    public class UserService : IService<ProfileUser>, ICRUDService<User>
+    public class UserService : IService<UserDTO>, ICRUDService<UserDTO>
     {
         IRepository<User> repoUser { get; set; }
-
-        UserService(IRepository<User> repositoryUser)
+        private readonly IMapper _mapper;
+        public UserService(IRepository<User> repositoryUser, IMapper mapper)
         {
             repoUser = repositoryUser;
+            _mapper = mapper;
         }
-
-        ProfileUser IService<ProfileUser>.GetItem(int? id)
+      
+        public UserDTO GetItem(int? id)
         {
             if (id == null)
                 throw new ValidationException("Не установлено id пользователь ", "");
@@ -25,7 +27,7 @@ namespace BLL.Services
             if (user == null)
                 throw new ValidationException("Пользователь не найден", "");
 
-            return new ProfileUser
+            return new UserDTO
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -36,13 +38,12 @@ namespace BLL.Services
             };
         }
 
-        IEnumerable<ProfileUser> IService<ProfileUser>.GetItems()
+        public IEnumerable<UserDTO> GetItems()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<User, ProfileUser>()).CreateMapper();
-            return mapper.Map<IEnumerable<User>, List<ProfileUser>>(repoUser.GetAll());
+            return _mapper.Map<IEnumerable<User>, List<UserDTO>>(repoUser.GetAll());
         }
 
-        public void Create(User item)
+        public void Create(UserDTO item)
         {
             if (item == null)
             {
@@ -50,12 +51,12 @@ namespace BLL.Services
             }
             else
             {
-                repoUser.Create(item);
+                repoUser.Create(_mapper.Map<User>(item));
                 Save();
             }
         }
 
-        public void Update(User item)
+        public void Update(UserDTO item)
         {
             if (item == null)
             {
@@ -63,12 +64,12 @@ namespace BLL.Services
             }
             else
             {
-                repoUser.Update(item);
+                repoUser.Update(_mapper.Map<User>(item));
                 Save();
             }
         }
 
-        public void Delete(User item)
+        public void Delete(UserDTO item)
         {
             if (item == null)
             {
@@ -76,7 +77,7 @@ namespace BLL.Services
             }
             else
             {
-                repoUser.Delete(item);
+                repoUser.Delete(_mapper.Map<User>(item));
                 Save();
             }
         }
@@ -84,6 +85,22 @@ namespace BLL.Services
         public void Save()
         {
             repoUser.Save();
+        }
+
+        //public void Delete(int id)
+        //{
+        //    var collection = GetItems();
+        //    var item = collection.Where();
+        //    if (item != null)
+        //    {
+        //        repoUser.Remove(item);
+        //    }
+        //}
+
+        public IEnumerable<UserDTO> Find(Func<UserDTO, bool> predicate)
+        {
+            var collection = GetItems();
+            return collection.Where(predicate).ToList();
         }
     }
 }

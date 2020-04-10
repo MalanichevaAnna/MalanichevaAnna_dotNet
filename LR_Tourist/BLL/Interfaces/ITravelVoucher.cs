@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using BLL.Model;
 namespace BLL.Interfaces
 {
     public interface ITravelVoucher
     {
-        void MakeOrder(ProfileTravelVoucher profileTravelVoucher,ProfileUser profileUser );
+        void MakeOrder(TravelVoucherDTO profileTravelVoucher,UserDTO profileUser );
 
-        ProfileTravelVoucher GetTravelVoucher(int? id);
+        TravelVoucherDTO GetTravelVoucher(int? id);
 
-        IEnumerable<ProfileTravelVoucher> GetTravelVouchers();
+        IEnumerable<TravelVoucherDTO> GetTravelVouchers();
 
     }
 }

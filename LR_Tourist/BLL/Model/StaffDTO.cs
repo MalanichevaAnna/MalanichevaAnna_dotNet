@@ -1,8 +1,9 @@
 ﻿
-namespace DA.Data
+namespace BLL.Model
 {
-    public class Staff : EntityBase, IPerson
+    public class StaffDTO : IPersonDTO
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -16,5 +17,10 @@ namespace DA.Data
         public string PersonalNumber { get; set; }
 
         public int Salary { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {FirstName} {LastName} {MiddleName} {Role} {Phone} {PersonalNumber} {Salary}";
+        }
     }
 }

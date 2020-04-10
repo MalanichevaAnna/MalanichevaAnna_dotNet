@@ -1,7 +1,7 @@
 ﻿using DA.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace DA.Services
+namespace DA
 {
     public class Context : DbContext
     {
