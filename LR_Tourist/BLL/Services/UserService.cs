@@ -22,10 +22,10 @@ namespace BLL.Services
         public UserDTO GetItem(int? id)
         {
             if (id == null)
-                throw new ValidationException("Не установлено id пользователь ", "");
+                throw new ArgumentException("Check id");
             var user = repoUser.Get(id.Value);
             if (user == null)
-                throw new ValidationException("Пользователь не найден", "");
+                throw new ArgumentException("User not found");
 
             return new UserDTO
             {
@@ -47,7 +47,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -60,7 +60,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -73,7 +73,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -87,20 +87,18 @@ namespace BLL.Services
             repoUser.Save();
         }
 
-        //public void Delete(int id)
-        //{
-        //    var collection = GetItems();
-        //    var item = collection.Where();
-        //    if (item != null)
-        //    {
-        //        repoUser.Remove(item);
-        //    }
-        //}
-
-        public IEnumerable<UserDTO> Find(Func<UserDTO, bool> predicate)
+        public void Delete(int id)
         {
-            var collection = GetItems();
-            return collection.Where(predicate).ToList();
+            var item = GetItems().Where(el =>el.Id == id).ToList();
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            else
+            {
+                repoUser.Delete(_mapper.Map<User>(item[0]).Id);
+                Save();
+            }
         }
     }
 }

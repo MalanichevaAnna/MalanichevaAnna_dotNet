@@ -2,8 +2,9 @@
 
 namespace DA.Data
 {
-    public class TravelVoucher : EntityBase
-    { 
+    public class TravelVoucher : IEntityBase
+    {
+        public int Id { get; set; }
         public string Country { get; set; }
 
         public DateTime Arrival { get; set; }

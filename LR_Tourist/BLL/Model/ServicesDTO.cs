@@ -1,7 +1,9 @@
 ﻿
+using DA.Data;
+
 namespace BLL.Model
 {
-    public class ServicesDTO 
+    public class ServicesDTO: IEntityBase
     {
         public int Id { get; set; }
 

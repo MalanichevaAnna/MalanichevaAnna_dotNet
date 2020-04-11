@@ -1,5 +1,7 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
@@ -22,14 +24,14 @@ namespace BLL.Services
         {
             if (id == null)
             {
-                throw new ValidationException("Не установлено id услуг ", "");
+                throw new ArgumentException("Check id");
             }
 
             var services = repoServices.Get(id.Value);
             
             if (services == null)
             {
-                throw new ValidationException("Услуга не найден", "");
+                throw new ArgumentNullException(nameof(services));
             }
 
             return new ServicesDTO
@@ -49,7 +51,7 @@ namespace BLL.Services
 
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -62,7 +64,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -75,7 +77,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -83,7 +85,19 @@ namespace BLL.Services
                 Save();
             }
         }
-
+        public void Delete(int id)
+        {
+            var item = GetItems().Where(el => el.Id == id).ToList();
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            else
+            {
+                repoServices.Delete(_mapper.Map<DA.Data.Services>(item[0]).Id);
+                Save();
+            }
+        }
         public void Save()
         {
             repoServices.Save();

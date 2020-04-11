@@ -1,11 +1,13 @@
-﻿using System;
+﻿using DA.Data;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DA.Services.Repository
 {
     public class Repository<T> : IRepository<T>
-        where T : class
+        where T : class, IEntityBase
     {
         public Context Context { get; set; }
         
@@ -26,7 +28,8 @@ namespace DA.Services.Repository
 
         public void Update(T item)
         {
-            Context.Set<T>().Update(item);
+            var entry = Context.Set<T>().First(e => e.Id == item.Id );
+            Context.Entry(entry).CurrentValues.SetValues(item);
         }
 
         public void Delete(T item)
@@ -46,7 +49,13 @@ namespace DA.Services.Repository
 
         public T Get(int id)
         {
+            
             return Context.Set<T>().Find(id);
+            //if(item == null)
+            //{
+            //    return null;
+            //}
+            //return item;
         }
 
         public void Delete(int id)

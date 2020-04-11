@@ -6,6 +6,7 @@ using DA.Data;
 using DA.Services.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -22,10 +23,15 @@ namespace BLL.Services
         public StaffDTO GetItem(int? id)
         {
             if (id == null)
-                throw new ValidationException("Не установлено id пользователь ", "");
+            {
+                throw new ArgumentException("Check id");
+            }
             var staff = repoStaff.Get(id.Value);
             if (staff == null)
-                throw new ValidationException("Пользователь не найден", "");
+            {
+                throw new ArgumentNullException(nameof(staff));
+            }
+                
 
             return new StaffDTO
             {
@@ -49,7 +55,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -62,7 +68,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -76,11 +82,24 @@ namespace BLL.Services
 
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
                 repoStaff.Delete(_mapper.Map<Staff>(item));
+                Save();
+            }
+        }
+        public void Delete(int id)
+        {
+            var item = GetItems().Where(el => el.Id == id).ToList();
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            else
+            {
+                repoStaff.Delete(_mapper.Map<Staff>(item[0]).Id);
                 Save();
             }
         }

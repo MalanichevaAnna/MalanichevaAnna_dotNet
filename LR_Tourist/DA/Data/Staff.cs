@@ -1,8 +1,9 @@
 ﻿
 namespace DA.Data
 {
-    public class Staff : EntityBase, IPerson
+    public class Staff : IEntityBase, IPerson
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

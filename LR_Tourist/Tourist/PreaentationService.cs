@@ -1,33 +1,33 @@
-﻿using BLL.Model;
-using BLL.Services;
-using BLL.ValidException;
+﻿using BLL.Services;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace TouristConsole
 {
-    public class PresentationUser
+    public class PreaentationService
     {
-        private readonly UserService serviceUser;
+        private readonly ServiceService service;
 
-        public PresentationUser(UserService serviceUser)
+        public PresentationHotel(HotelService serviceHotel)
         {
-            this.serviceUser = serviceUser;
+            this.service = serviceHotel;
         }
 
-        public  IEnumerable<UserDTO> GetCollectionUsers()
+        public IEnumerable<HotelDTO> GetCollectionHotels()
         {
-            IEnumerable<UserDTO> usersDTO = serviceUser.GetItems();
+            IEnumerable<HotelDTO> usersDTO = service.GetItems();
             return usersDTO;
         }
-        public UserDTO GetUser(int? id)
+        public HotelDTO GetHotel(int? id)
         {
-            return serviceUser.GetItem(id);
+            return service.GetItem(id);
         }
-        public string CreateUser(UserDTO profileUser)
+        public string CreateHotel(HotelDTO profileHotel)
         {
             try
             {
-                serviceUser.Create(profileUser);
+                service.Create(profileHotel);
                 return "Успешно добваено";
             }
             catch (ValidationException ex)
@@ -35,11 +35,11 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-        public string UpdateUser(UserDTO profileUser)
+        public string UpdateHotel(HotelDTO profileHotel)
         {
             try
             {
-                serviceUser.Update(profileUser);
+                service.Update(profileHotel);
                 return "Успешно добваено";
             }
             catch (ValidationException ex)
@@ -47,11 +47,11 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-        public string DeleteUser(int id)
+        public string DeleteHotel(int id)
         {
             try
             {
-                serviceUser.Delete(id);
+                service.Delete(id);
                 return "Успешно добваено";
             }
             catch (ValidationException ex)
@@ -59,6 +59,5 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-
     }
 }

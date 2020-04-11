@@ -47,11 +47,11 @@ namespace TouristConsole
                 throw new ValidationException(ex.Property, ex.Message);
             }
         }
-        public string DeleteHaotel(HotelDTO profileHotel)
+        public string DeleteHotel(int id)
         {
             try
             {
-                serviceHotel.Delete(profileHotel);
+                serviceHotel.Delete(id);
                 return "Успешно добваено";
             }
             catch (ValidationException ex)

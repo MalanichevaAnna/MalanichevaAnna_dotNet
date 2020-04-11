@@ -1,7 +1,9 @@
 ﻿
+using DA.Data;
+
 namespace BLL.Model
 {
-    public class HotelDTO
+    public class HotelDTO: IEntityBase
     {
         public int Id { get; set; }
         public string NameHotel { get; set; }

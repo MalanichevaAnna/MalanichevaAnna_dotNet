@@ -60,6 +60,14 @@
               "version": "[2.0.3, )",
               "autoReferenced": true
             },
+            "NLog": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "NLog.Config": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
             "Ninject": {
               "target": "Package",
               "version": "[3.3.4, )"

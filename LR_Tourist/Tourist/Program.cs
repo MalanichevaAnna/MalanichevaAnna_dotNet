@@ -2,6 +2,7 @@
 using System;
 using TouristConsole;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 
 namespace Tourist
 {
@@ -9,11 +10,19 @@ namespace Tourist
     {
         static void Main(string[] args)
         {
-            var services = Startup.Configure();
-            var mainPresentation = services.GetService<PresentationMenu>();
-            mainPresentation.PrintMenu();
-
+            var logger = LogManager.GetCurrentClassLogger();
+            try
+            {
+                var services = Startup.Configure();
+                var mainPresentation = services.GetService<PresentationMenu>();
+                mainPresentation.PrintMenu();
             }
+            catch (Exception ex)
+            {
+                logger.Error(ex, ex.Message);
+            }
+
+        }
         }
         
     }

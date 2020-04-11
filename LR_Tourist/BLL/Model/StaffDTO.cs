@@ -1,7 +1,7 @@
 ﻿
 namespace BLL.Model
 {
-    public class StaffDTO : IPersonDTO
+    public class StaffDTO : IPersonDTO, IEntityBaseDTO
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

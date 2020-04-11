@@ -13,9 +13,7 @@ namespace BLL.Interfaces
 
         void Delete(T item);
 
-       // void Delete(int id);
-
-        IEnumerable<T> Find(Func<T, Boolean> predicate);
+        void Delete(int id);
 
         void Save();
 

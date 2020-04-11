@@ -1,7 +1,7 @@
 ﻿
 namespace DA.Data
 {
-    public class User : IPerson
+    public class User : IPerson, IEntityBase
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

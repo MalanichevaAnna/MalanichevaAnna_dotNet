@@ -9,3 +9,4 @@ D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\
 D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\BLL.pdb
 D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.dll
 D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\obj\Debug\netstandard2.0\BLL.pdb
+D:\3 курс\2 семестр\ИГИ\MalanichevaAnna_dotNet\LR_Tourist\BLL\bin\Debug\netstandard2.0\NLog.config

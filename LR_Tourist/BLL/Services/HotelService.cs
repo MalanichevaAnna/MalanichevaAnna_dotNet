@@ -4,7 +4,9 @@ using BLL.Model;
 using BLL.ValidException;
 using DA.Data;
 using DA.Services.Repository;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BLL.Services
 {
@@ -23,14 +25,14 @@ namespace BLL.Services
         {
             if (id == null)
             {
-                throw new ValidationException("Не установлено id отеля ", "");
+                throw new ArgumentException("Not installed id");
             }
 
             var hotel = repoHotel.Get(id.Value);
 
             if (hotel == null)
             {
-                throw new ValidationException("Услуга не найден", "");
+                throw new ArgumentException("Services not found");
             }
 
             return new HotelDTO
@@ -52,7 +54,7 @@ namespace BLL.Services
         {
             if(item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -65,7 +67,7 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -78,7 +80,8 @@ namespace BLL.Services
         {
             if (item == null)
             {
-                throw new ValidationException("Пустой объект ", "");
+                //throw new ValidationException("Пустой объект ", "");
+                throw new ArgumentNullException(nameof(item));
             }
             else
             {
@@ -86,7 +89,19 @@ namespace BLL.Services
                 Save();
             }
         }
-
+        public void Delete(int id)
+        {
+            var item = GetItems().Where(el => el.Id == id).ToList();
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            else
+            {
+                repoHotel.Delete(_mapper.Map<Hotel>(item[0]).Id);
+                Save();
+            }
+        }
         public void Save()
         {
             repoHotel.Save();

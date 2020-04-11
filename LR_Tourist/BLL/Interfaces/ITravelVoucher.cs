@@ -4,7 +4,7 @@ namespace BLL.Interfaces
 {
     public interface ITravelVoucher
     {
-        void MakeOrder(TravelVoucherDTO profileTravelVoucher,UserDTO profileUser );
+        void MakeOrder(int idTravelVoucher, int idUser );
 
         TravelVoucherDTO GetTravelVoucher(int? id);
 

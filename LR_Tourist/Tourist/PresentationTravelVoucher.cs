@@ -1,6 +1,7 @@
 ﻿using BLL.Model;
 using BLL.Services;
 using BLL.ValidException;
+using System;
 using System.Collections.Generic;
 
 namespace TouristConsole
@@ -16,17 +17,10 @@ namespace TouristConsole
             this.userService = userService;
         }
 
-        public string MakeOrder(TravelVoucherDTO profileTravelVoucher, UserDTO profileUser)
+        public void MakeOrder(int idTravelVoucher, int idUser)
         {
-            try
-            {
-                serviceTravelVoucher.MakeOrder(profileTravelVoucher, profileUser);
-                return "Успешно";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+
+            serviceTravelVoucher.MakeOrder(idTravelVoucher, idUser);
         }
 
         public IEnumerable<TravelVoucherDTO> GetCollectionTravelVouchers()
@@ -40,44 +34,19 @@ namespace TouristConsole
             return serviceTravelVoucher.GetTravelVoucher(id);
         }
 
-        public string CreateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
+        public void CreateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
         {
-            try
-            {
-                serviceTravelVoucher.Create(profileTravelVoucher);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceTravelVoucher.Create(profileTravelVoucher);
         }
 
-        public string UpdateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
+        public void UpdateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
         {
-            try
-            {
-                serviceTravelVoucher.Update(profileTravelVoucher);
-                return "Успешно обновлено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceTravelVoucher.Update(profileTravelVoucher);
         }
 
-        public string DeleteTravelVoucher(TravelVoucherDTO profileTravelVoucher)
+        public void DeleteTravelVoucher(int id)
         {
-            try
-            {
-                serviceTravelVoucher.Delete(profileTravelVoucher);
-                return "Успешно удалено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceTravelVoucher.Delete(id);
         }
-
     }
 }
