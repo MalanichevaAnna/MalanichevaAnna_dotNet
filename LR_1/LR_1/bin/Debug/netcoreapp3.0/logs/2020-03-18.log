@@ -1,9 +1,0 @@
-2020-03-18 10:25:05.3206 ERROR An exception occurs during the execution.
-2020-03-18 10:25:51.6225 ERROR An exception occurs during the execution.
-2020-03-18 10:26:23.5343 ERROR An exception occurs during the execution.
-2020-03-18 10:27:56.2866 ERROR The conversion cannot be performed.
-    Text: ''
-    MemberType: 
-    TypeConverter: 'CsvHelper.TypeConversion.Int32Converter'
-2020-03-18 10:28:28.2388 ERROR The number of items and ratings does not match
-2020-03-18 10:28:56.1099 ERROR The number of items and ratings does not match
