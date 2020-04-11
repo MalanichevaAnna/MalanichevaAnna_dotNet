@@ -11,8 +11,6 @@ namespace BLL.Interfaces
 
         void Update(T item);
 
-        void Delete(T item);
-
         void Delete(int id);
 
         void Save();

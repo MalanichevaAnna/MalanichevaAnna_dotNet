@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
-using BLL.ValidException;
 using DA.Data;
 using DA.Services.Repository;
 using System;
@@ -77,19 +76,6 @@ namespace BLL.Services
             }
         }
 
-        public void Delete(StaffDTO item)
-        {
-
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-            else
-            {
-                repoStaff.Delete(_mapper.Map<Staff>(item));
-                Save();
-            }
-        }
         public void Delete(int id)
         {
             var item = GetItems().Where(el => el.Id == id).ToList();

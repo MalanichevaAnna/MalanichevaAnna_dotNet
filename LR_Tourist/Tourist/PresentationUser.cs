@@ -1,6 +1,5 @@
 ﻿using BLL.Model;
 using BLL.Services;
-using BLL.ValidException;
 using System.Collections.Generic;
 
 namespace TouristConsole
@@ -23,42 +22,17 @@ namespace TouristConsole
         {
             return serviceUser.GetItem(id);
         }
-        public string CreateUser(UserDTO profileUser)
+        public void CreateUser(UserDTO profileUser)
         {
-            try
-            {
-                serviceUser.Create(profileUser);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceUser.Create(profileUser);
         }
-        public string UpdateUser(UserDTO profileUser)
+        public void UpdateUser(UserDTO profileUser)
+        { 
+            serviceUser.Update(profileUser);
+        }
+        public void DeleteUser(int id)
         {
-            try
-            {
-                serviceUser.Update(profileUser);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceUser.Delete(id);
         }
-        public string DeleteUser(int id)
-        {
-            try
-            {
-                serviceUser.Delete(id);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
-        }
-
     }
 }

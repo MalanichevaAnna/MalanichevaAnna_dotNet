@@ -16,7 +16,7 @@ namespace BLL
 
             CreateMap<ServicesDTO, DA.Data.Services>().ReverseMap();
 
-            CreateMap<TravelVoucher, TravelVoucher>().ReverseMap();
+            CreateMap<TravelVoucherDTO, TravelVoucher>().ReverseMap();
         }
     }
 }

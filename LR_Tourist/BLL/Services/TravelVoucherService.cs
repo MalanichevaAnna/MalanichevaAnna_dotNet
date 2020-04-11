@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
-using BLL.ValidException;
 using DA.Data;
 using DA.Services.Repository;
 using System;
@@ -41,10 +40,13 @@ namespace BLL.Services
         public TravelVoucherDTO GetTravelVoucher(int? id)
         {
             if (id == null)
-                throw new ValidationException("Не установлено id путевки ", "");
+            {
+                throw new ArgumentException("Check id travel voucher");
+            }
+               
             var travelVoucher = repoTravelVoucher.Get(id.Value);
             if (travelVoucher == null)
-                throw new ValidationException("Путевка не найден", "");
+                throw new ArgumentNullException(nameof(travelVoucher));
 
             return new TravelVoucherDTO {
                 Country = travelVoucher.Country,
@@ -70,11 +72,11 @@ namespace BLL.Services
             // валидация
             if (user == null)
             {
-                throw new ValidationException("Пользователь не найден", "");
+                throw new ArgumentException("user not found");
             }
             else if(travelVoucher == null)
             {
-                throw new ValidationException("Travel voucher not found", "");
+                throw new ArgumentException("Travel voucher not found", "");
             }
 
             travelVoucher.UserId = user.Id;
@@ -82,7 +84,7 @@ namespace BLL.Services
             repoTravelVoucher.Save();
         }
 
-        public void Create(Model.TravelVoucherDTO item)
+        public void Create(TravelVoucherDTO item)
         {
             if (item == null)
             {
@@ -91,7 +93,7 @@ namespace BLL.Services
             else
             {
                 
-                if (CheckId(item.StaffId, item.HotelId,item.ServicesId))
+                if (CheckId(item.StaffId, item.HotelId,item.ServicesId,item.UserId))
                 {
                     throw new ArgumentException("Check id");
                 }
@@ -103,7 +105,7 @@ namespace BLL.Services
             }
         }
 
-        public bool CheckId(int idStaff,int idHotel,int idService)
+        public bool CheckId(int idStaff,int idHotel,int idService,int idUser)
         {
             try
             {
@@ -111,6 +113,7 @@ namespace BLL.Services
                 var staff = repoStaff.Get(idStaff);
                 var service = repoService.Get(idService);
                 var hotel = repoHotel.Get(idHotel);
+                var user = repoUser.Get(idUser);
                 if(staff == null || service == null || hotel == null)
                 {
                     return true;
@@ -131,7 +134,7 @@ namespace BLL.Services
             }
             else
             {
-                if (CheckId(item.StaffId, item.HotelId, item.ServicesId))
+                if (CheckId(item.StaffId, item.HotelId, item.ServicesId, item.UserId))
                 {
                     throw new ArgumentException("Check id");
                 }
@@ -140,18 +143,6 @@ namespace BLL.Services
             }
         }
 
-        public void Delete(Model.TravelVoucherDTO item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-            else
-            {
-                repoTravelVoucher.Delete(_mapper.Map<DA.Data.TravelVoucher>(item));
-                Save();
-            }
-        }
         public void Delete(int id)
         {
             var item = GetTravelVouchers().Where(el => el.Id == id).ToList();

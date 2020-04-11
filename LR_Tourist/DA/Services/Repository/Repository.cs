@@ -32,11 +32,6 @@ namespace DA.Services.Repository
             Context.Entry(entry).CurrentValues.SetValues(item);
         }
 
-        public void Delete(T item)
-        {
-            Context.Set<T>().Remove(item);
-        }
-
         public void Save()
         {
             Context.SaveChanges();
@@ -49,13 +44,7 @@ namespace DA.Services.Repository
 
         public T Get(int id)
         {
-            
             return Context.Set<T>().Find(id);
-            //if(item == null)
-            //{
-            //    return null;
-            //}
-            //return item;
         }
 
         public void Delete(int id)

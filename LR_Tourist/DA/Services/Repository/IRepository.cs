@@ -16,8 +16,6 @@ namespace DA.Services.Repository
 
         void Update(T item);
 
-        void Delete(T item);
-
         void Delete(int id);
 
         void Save();

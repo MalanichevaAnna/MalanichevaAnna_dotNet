@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
-using BLL.ValidException;
+
 using DA.Data;
 using DA.Services.Repository;
 using System;
@@ -65,19 +65,6 @@ namespace BLL.Services
             else
             {
                 repoUser.Update(_mapper.Map<User>(item));
-                Save();
-            }
-        }
-
-        public void Delete(UserDTO item)
-        {
-            if (item == null)
-            {
-                throw new ArgumentNullException(nameof(item));
-            }
-            else
-            {
-                repoUser.Delete(_mapper.Map<User>(item));
                 Save();
             }
         }

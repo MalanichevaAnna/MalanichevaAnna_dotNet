@@ -23,7 +23,7 @@ namespace BLL.Model
 
         public override string ToString()
         {
-            return $"{Id} {Country} {Arrival} {Departure} {Price} ";
+            return $"{Id} {Country} {Arrival} {Departure} {Price} {HotelId} {StaffId} {UserId} ";
         }
 
     }

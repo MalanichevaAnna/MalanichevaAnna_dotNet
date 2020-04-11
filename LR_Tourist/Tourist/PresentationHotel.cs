@@ -1,6 +1,5 @@
 ﻿using BLL.Model;
 using BLL.Services;
-using BLL.ValidException;
 using System.Collections.Generic;
 
 namespace TouristConsole
@@ -16,48 +15,24 @@ namespace TouristConsole
 
         public IEnumerable<HotelDTO> GetCollectionHotels()
         {
-            IEnumerable<HotelDTO> usersDTO = serviceHotel.GetItems();
-            return usersDTO;
+            IEnumerable<HotelDTO> hotelsDTO = serviceHotel.GetItems();
+            return hotelsDTO;
         }
         public HotelDTO GetHotel(int? id)
         {
             return serviceHotel.GetItem(id);
         }
-        public string CreateHotel(HotelDTO profileHotel)
+        public void CreateHotel(HotelDTO hotelDTO)
         {
-            try
-            {
-                serviceHotel.Create(profileHotel);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceHotel.Create(hotelDTO);
         }
-        public string UpdateHotel(HotelDTO profileHotel)
+        public void UpdateHotel(HotelDTO hotelDTO)
         {
-            try
-            {
-                serviceHotel.Update(profileHotel);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceHotel.Update(hotelDTO);
         }
-        public string DeleteHotel(int id)
+        public void DeleteHotel(int id)
         {
-            try
-            {
-                serviceHotel.Delete(id);
-                return "Успешно добваено";
-            }
-            catch (ValidationException ex)
-            {
-                throw new ValidationException(ex.Property, ex.Message);
-            }
+            serviceHotel.Delete(id);
         }
     }
 }

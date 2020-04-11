@@ -1,8 +1,5 @@
 ﻿using BLL.Model;
-using BLL.Services;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 namespace TouristConsole
 {
@@ -13,13 +10,16 @@ namespace TouristConsole
         private readonly PresentationTravelVoucher presentationTravelVoucher;
         private readonly PresentationUser presentationUser;
         private readonly PresentationStaff presentationStaff;
+        private readonly PresentationService presentationService;
         public PresentationMenu(PresentationHotel presentationHotel, PresentationTravelVoucher presentationTravelVoucher, 
-                                PresentationUser presentationUser, PresentationStaff presentationStaff)
+                                PresentationUser presentationUser, PresentationStaff presentationStaff,
+                                PresentationService presentationService)
         {
             this.presentationHotel = presentationHotel;
             this.presentationTravelVoucher = presentationTravelVoucher;
             this.presentationUser = presentationUser;
             this.presentationStaff = presentationStaff;
+            this.presentationService = presentationService;
         }
 
         public void PrintMenu()
@@ -303,11 +303,16 @@ namespace TouristConsole
                             Console.Clear();
                             break;
                         }
-
                     case 13:
                         {
                             Console.Clear();
-                            presentationUser.GetCollectionUsers().ToList().ForEach(el => Console.WriteLine(el));
+                            Console.Write("Input name service: ");
+                            var name = Console.ReadLine();
+                            var services = new ServicesDTO
+                            {
+                                NameServices = name,
+                            };
+                            presentationService.CreateService(services);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -315,12 +320,47 @@ namespace TouristConsole
                     case 14:
                         {
                             Console.Clear();
+                            Console.Write("Input id service: ");
+                            var id = Convert.ToInt32(Console.ReadLine());
+                            var service = presentationService.GetCollectionServices().Where(el => el.Id == id).FirstOrDefault();
+                            if (service != null)
+                            {
+                                Console.Write("Input name service: ");
+                                var name = Console.ReadLine();
+                                presentationService.UpdateService(service);
+                                Console.ReadKey();
+                                Console.Clear();
+                            }
+                            break;
+                        }
+                    case 15:
+                        {
+                            Console.Clear();
+                            Console.Write("Input id service for delete: ");
+                            var id = Convert.ToInt32(Console.ReadLine());
+                            presentationService.DeleteService(id);
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
+
+                    case 16:
+                        {
+                            Console.Clear();
+                            presentationUser.GetCollectionUsers().ToList().ForEach(el => Console.WriteLine(el));
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
+                    case 17:
+                        {
+                            Console.Clear();
                             presentationHotel.GetCollectionHotels().ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
                         }
-                    case 15:
+                    case 18:
                         {
                             Console.Clear();
                             presentationTravelVoucher.GetCollectionTravelVouchers().ToList().ForEach(el => Console.WriteLine(el));
@@ -328,7 +368,7 @@ namespace TouristConsole
                             Console.Clear();
                             break;
                         }
-                    case 16:
+                    case 19:
                         {
                             Console.Clear();
                             presentationStaff.GetCollectionStaffs().ToList().ForEach(el => Console.WriteLine(el));
@@ -336,7 +376,15 @@ namespace TouristConsole
                             Console.Clear();
                             break;
                         }
-                    case 17:
+                    case 20:
+                        {
+                            Console.Clear();
+                            presentationService.GetCollectionServices().ToList().ForEach(el => Console.WriteLine(el));
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        }
+                    case 21:
                         {
                             Console.Clear();
                             Console.WriteLine("Input id user");
@@ -374,12 +422,17 @@ namespace TouristConsole
             Console.WriteLine("11. Update staff");
             Console.WriteLine("12. Delete staff");
             Console.WriteLine();
-            Console.WriteLine("13. List clients");
-            Console.WriteLine("14. List hotels");
-            Console.WriteLine("15. List travel vouchers");
-            Console.WriteLine("16. List satff");
+            Console.WriteLine("13. Add service");
+            Console.WriteLine("14. Update service");
+            Console.WriteLine("15. Delete service");
             Console.WriteLine();
-            Console.WriteLine("17. Order");
+            Console.WriteLine("16. List clients");
+            Console.WriteLine("17. List hotels");
+            Console.WriteLine("18. List travel vouchers");
+            Console.WriteLine("19. List satff");
+            Console.WriteLine("20. List service");
+            Console.WriteLine();
+            Console.WriteLine("21. Order");
             Console.WriteLine("0. Exit");
 
             Console.WriteLine();

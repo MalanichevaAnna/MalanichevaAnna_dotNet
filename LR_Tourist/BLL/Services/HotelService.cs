@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
-using BLL.ValidException;
 using DA.Data;
 using DA.Services.Repository;
 using System;
@@ -72,20 +71,6 @@ namespace BLL.Services
             else
             {
                 repoHotel.Update(_mapper.Map<Hotel>(item));
-                Save();
-            }
-        }
-
-        public void Delete(HotelDTO item)
-        {
-            if (item == null)
-            {
-                //throw new ValidationException("Пустой объект ", "");
-                throw new ArgumentNullException(nameof(item));
-            }
-            else
-            {
-                repoHotel.Delete(_mapper.Map<Hotel>(item));
                 Save();
             }
         }

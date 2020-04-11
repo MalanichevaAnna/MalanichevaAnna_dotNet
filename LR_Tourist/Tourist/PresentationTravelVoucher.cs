@@ -1,7 +1,5 @@
 ﻿using BLL.Model;
 using BLL.Services;
-using BLL.ValidException;
-using System;
 using System.Collections.Generic;
 
 namespace TouristConsole
@@ -9,12 +7,10 @@ namespace TouristConsole
     public class PresentationTravelVoucher
     {
         private readonly TravelVoucherService serviceTravelVoucher;
-        private readonly UserService userService;
-
+     
         public PresentationTravelVoucher(TravelVoucherService serviceTravelVoucher, UserService userService)
         {
             this.serviceTravelVoucher = serviceTravelVoucher;
-            this.userService = userService;
         }
 
         public void MakeOrder(int idTravelVoucher, int idUser)
