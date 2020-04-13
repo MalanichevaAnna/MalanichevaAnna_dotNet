@@ -15,15 +15,13 @@ namespace Tourist
             {
                 var services = Startup.Configure();
                 var mainPresentation = services.GetService<PresentationMenu>();
-                mainPresentation.PrintMenu();
+                mainPresentation.StartAppSession();
             }
             catch (Exception ex)
             {
                 logger.Error(ex, ex.Message);
             }
-
         }
-        }
-        
-    }
+    }        
+}
 

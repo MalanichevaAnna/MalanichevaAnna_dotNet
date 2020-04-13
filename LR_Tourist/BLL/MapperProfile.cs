@@ -4,19 +4,19 @@ using DA.Data;
 
 namespace BLL
 {
-    class MapperProfile : Profile
+    public class MapperProfile : Profile
     {
         public MapperProfile()
         {
-            CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
 
-            CreateMap<HotelDTO, Hotel>().ReverseMap();
+            CreateMap<Hotel, HotelDTO>().ReverseMap();
 
-            CreateMap<StaffDTO, Staff>().ReverseMap();
+            CreateMap<Staff, StaffDTO>().ReverseMap();
 
-            CreateMap<ServicesDTO, DA.Data.Services>().ReverseMap();
+            CreateMap<Service, ServiceDTO>().ReverseMap();
 
-            CreateMap<TravelVoucherDTO, TravelVoucher>().ReverseMap();
+            CreateMap<TravelVoucher, TravelVoucherDTO>().ReverseMap();
         }
     }
 }

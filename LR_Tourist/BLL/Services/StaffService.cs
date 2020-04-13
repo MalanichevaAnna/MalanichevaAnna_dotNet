@@ -6,33 +6,31 @@ using DA.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class StaffService: IService<StaffDTO>,ICRUDService<StaffDTO>
+    public class StaffService: IService<Staff>,ICRUDService<Staff>
     {
-        IRepository<Staff> repoStaff { get; set; }
+        private readonly IRepository<StaffDTO> repoStaff;
+
         private readonly IMapper _mapper;
-        public StaffService(IRepository<Staff> repositoryStaff,IMapper mapper)
+
+        public StaffService(IRepository<StaffDTO> repositoryStaff,IMapper mapper)
         {
             repoStaff = repositoryStaff;
             _mapper = mapper;
         }
 
-        public StaffDTO GetItem(int? id)
+        public async Task<Staff> GetItem(int id)
         {
-            if (id == null)
-            {
-                throw new ArgumentException("Check id");
-            }
-            var staff = repoStaff.Get(id.Value);
+            var staff = await repoStaff.Get(id);
             if (staff == null)
             {
                 throw new ArgumentNullException(nameof(staff));
             }
-                
 
-            return new StaffDTO
+            return new Staff
             {
                 Id = staff.Id,
                 FirstName = staff.FirstName,
@@ -45,12 +43,11 @@ namespace BLL.Services
             };
         }
 
-        public IEnumerable<StaffDTO> GetItems()
+        public async Task<IEnumerable<Staff>> GetItems()
         {
-            
-            return _mapper.Map<IEnumerable<Staff>, List<StaffDTO>>(repoStaff.GetAll());
+            return _mapper.Map<IEnumerable<StaffDTO>, List<Staff>>( await repoStaff.GetAll());
         }
-        public void Create(StaffDTO item)
+        public async Task Create(Staff item)
         {
             if (item == null)
             {
@@ -58,12 +55,11 @@ namespace BLL.Services
             }
             else
             {
-                repoStaff.Create(_mapper.Map<Staff>(item));
-                Save();
+                await repoStaff.Create(_mapper.Map<StaffDTO>(item));
             }
         }
 
-        public void Update(StaffDTO item)
+        public async Task Update(Staff item)
         {
             if (item == null)
             {
@@ -71,27 +67,21 @@ namespace BLL.Services
             }
             else
             {
-                repoStaff.Update(_mapper.Map<Staff>(item));
-                Save();
+                await repoStaff.Update(_mapper.Map<StaffDTO>(item));
             }
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = GetItems().Where(el => el.Id == id).ToList();
+            var item = GetItems().Result.Where(el => el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
             else
             {
-                repoStaff.Delete(_mapper.Map<Staff>(item[0]).Id);
-                Save();
+               await repoStaff.Delete(_mapper.Map<StaffDTO>(item[0]).Id);
             }
-        }
-        public void Save()
-        {
-            repoStaff.Save();
         }
     }
 }

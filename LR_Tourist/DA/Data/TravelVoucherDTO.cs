@@ -2,7 +2,7 @@
 
 namespace DA.Data
 {
-    public class TravelVoucher : IEntityBase
+    public class TravelVoucherDTO : IEntityBase
     {
         public int Id { get; set; }
         public string Country { get; set; }

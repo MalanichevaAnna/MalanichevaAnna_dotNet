@@ -1,7 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
@@ -9,43 +9,39 @@ using DA.Services.Repository;
 
 namespace BLL.Services
 {
-    public class ServiceService : IService<ServicesDTO>, ICRUDService<ServicesDTO>
+    public class ServiceService : IService<Service>, ICRUDService<Service>
     {
-        IRepository<DA.Data.Services> repoServices { get; set; }
+        private readonly IRepository<DA.Data.ServiceDTO> repoServices;
+
         private readonly IMapper _mapper;
-        public ServiceService(IRepository<DA.Data.Services> repositoryServices, IMapper mapper)
+        public ServiceService(IRepository<DA.Data.ServiceDTO> repositoryServices, IMapper mapper)
         {
             repoServices = repositoryServices;
             _mapper = mapper;
         }
 
-        public ServicesDTO GetItem(int? id)
+        public async Task<Service> GetItem(int id)
         {
-            if (id == null)
-            {
-                throw new ArgumentException("Check id");
-            }
-
-            var services = repoServices.Get(id.Value);
+            var services = await repoServices.Get(id);
             
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            return new ServicesDTO
+            return new Service
             {
                 Id = services.Id,
-                NameServices = services.NameServices,
+                Name = services.Name,
             };
         }
 
-        public IEnumerable<ServicesDTO> GetItems()
+        public async Task<IEnumerable<Service>> GetItems()
         {
-            return _mapper.Map<IEnumerable<DA.Data.Services>, List<ServicesDTO>>(repoServices.GetAll());
+            return _mapper.Map<IEnumerable<DA.Data.ServiceDTO>, List<Service>>( await repoServices.GetAll());
         }
 
-        public void Create(ServicesDTO item)
+        public async Task Create(Service item)
         {
 
             if (item == null)
@@ -54,12 +50,11 @@ namespace BLL.Services
             }
             else
             {
-                repoServices.Create(_mapper.Map<DA.Data.Services>(item));
-                Save();
+                await repoServices.Create(_mapper.Map<DA.Data.ServiceDTO>(item));
             }
         }
 
-        public void Update(ServicesDTO item)
+        public async Task Update(Service item)
         {
             if (item == null)
             {
@@ -67,28 +62,21 @@ namespace BLL.Services
             }
             else
             {
-                repoServices.Update(_mapper.Map <DA.Data.Services>(item));
-                Save();
+                await repoServices.Update(_mapper.Map <DA.Data.ServiceDTO>(item));
             }
         }
 
-
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = GetItems().Where(el => el.Id == id).ToList();
+            var item = GetItems().Result.Where(el => el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
             else
             {
-                repoServices.Delete(_mapper.Map<DA.Data.Services>(item[0]).Id);
-                Save();
+                await repoServices.Delete(_mapper.Map<DA.Data.ServiceDTO>(item[0]).Id);
             }
-        }
-        public void Save()
-        {
-            repoServices.Save();
         }
     }
 }

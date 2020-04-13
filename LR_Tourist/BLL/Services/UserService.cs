@@ -1,33 +1,36 @@
 ﻿using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
-
 using DA.Data;
 using DA.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+
 namespace BLL.Services
 {
-    public class UserService : IService<UserDTO>, ICRUDService<UserDTO>
+    public class UserService : IService<Model.User>, ICRUDService<Model.User>
     {
-        IRepository<User> repoUser { get; set; }
+        private readonly IRepository<DA.Data.UserDTO> repoUser;
+
         private readonly IMapper _mapper;
-        public UserService(IRepository<User> repositoryUser, IMapper mapper)
+
+        public UserService(IRepository<DA.Data.UserDTO> repositoryUser, IMapper mapper)
         {
             repoUser = repositoryUser;
             _mapper = mapper;
         }
       
-        public UserDTO GetItem(int? id)
+        public async Task<Model.User> GetItem(int id)
         {
-            if (id == null)
-                throw new ArgumentException("Check id");
-            var user = repoUser.Get(id.Value);
+            var user = await repoUser.Get(id);
             if (user == null)
+            {
                 throw new ArgumentException("User not found");
+            }
 
-            return new UserDTO
+            return new Model.User
             {
                 Id = user.Id,
                 FirstName = user.FirstName,
@@ -38,12 +41,12 @@ namespace BLL.Services
             };
         }
 
-        public IEnumerable<UserDTO> GetItems()
+        public async Task<IEnumerable<User>> GetItems()
         {
-            return _mapper.Map<IEnumerable<User>, List<UserDTO>>(repoUser.GetAll());
+            return _mapper.Map<IEnumerable<UserDTO>, List<User>>(await repoUser.GetAll());
         }
 
-        public void Create(UserDTO item)
+        public async Task Create(User item)
         {
             if (item == null)
             {
@@ -51,12 +54,11 @@ namespace BLL.Services
             }
             else
             {
-                repoUser.Create(_mapper.Map<User>(item));
-                Save();
+                await repoUser.Create(_mapper.Map<UserDTO>(item));
             }
         }
 
-        public void Update(UserDTO item)
+        public async Task Update(User item)
         {
             if (item == null)
             {
@@ -64,27 +66,20 @@ namespace BLL.Services
             }
             else
             {
-                repoUser.Update(_mapper.Map<User>(item));
-                Save();
+                await repoUser.Update(_mapper.Map<DA.Data.UserDTO>(item));
             }
         }
 
-        public void Save()
+        public async Task Delete(int id)
         {
-            repoUser.Save();
-        }
-
-        public void Delete(int id)
-        {
-            var item = GetItems().Where(el =>el.Id == id).ToList();
+            var item = GetItems().Result.Where(el =>el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
             else
             {
-                repoUser.Delete(_mapper.Map<User>(item[0]).Id);
-                Save();
+                await repoUser.Delete(_mapper.Map<DA.Data.UserDTO>(item[0]).Id);
             }
         }
     }

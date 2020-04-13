@@ -22,7 +22,7 @@ namespace TouristConsole
             this.presentationService = presentationService;
         }
 
-        public void PrintMenu()
+        public void StartAppSession()
         {
             int numberMenu = -1;
             while (numberMenu != 0)
@@ -46,7 +46,7 @@ namespace TouristConsole
                             var address = Console.ReadLine();
                             Console.Write("Input phone");
                             var phone = Console.ReadLine();
-                            var user = new UserDTO
+                            var user = new User
                             {
                                 FirstName = firstName,
                                 LastName = lastName,
@@ -65,7 +65,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id user: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var user = presentationUser.GetCollectionUsers().Where(el => el.Id == id).FirstOrDefault();
+                            var user = presentationUser.GetCollectionUsers().Result.Where(el => el.Id == id).FirstOrDefault();
                             if(user != null)
                             {
                                 Console.Write("Input firstname: ");
@@ -109,9 +109,9 @@ namespace TouristConsole
                             var star = Convert.ToInt32(Console.ReadLine());
                             Console.Write("Input phone: ");
                             var phone = Console.ReadLine();
-                            var hotel = new HotelDTO
+                            var hotel = new Hotel
                             {
-                                NameHotel = name,
+                                Name = name,
                                 Star = star,
                                 Phone = phone,
                             };
@@ -125,7 +125,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id hotel: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var hotel = presentationHotel.GetCollectionHotels().Where(el => el.Id == id).FirstOrDefault();
+                            var hotel = presentationHotel.GetCollectionHotels().Result.Where(el => el.Id == id).FirstOrDefault();
                             if(hotel != null)
                             {
                                 Console.Write("Input name: ");
@@ -134,7 +134,7 @@ namespace TouristConsole
                                 var star = Convert.ToInt32(Console.ReadLine());
                                 Console.Write("Input phone: ");
                                 var phone = Console.ReadLine();
-                                hotel.NameHotel = name;
+                                hotel.Name = name;
                                 hotel.Star = star;
                                 hotel.Phone = phone;
                                 presentationHotel.UpdateHotel(hotel);
@@ -172,7 +172,7 @@ namespace TouristConsole
                             var staffId = Convert.ToInt32(Console.ReadLine());
                             Console.Write("Input UserId: ");
                             var userId = Convert.ToInt32(Console.ReadLine());
-                            var travelVoucher = new TravelVoucherDTO
+                            var travelVoucher = new TravelVoucher
                             {
                                 Country = country,
                                 Arrival = arrival,
@@ -193,7 +193,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id travel voucher: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var travelVoucher = presentationTravelVoucher.GetCollectionTravelVouchers().Where(el=>el.Id == id).FirstOrDefault();
+                            var travelVoucher = presentationTravelVoucher.GetCollectionTravelVouchers().Result.Where(el=>el.Id == id).FirstOrDefault();
                             if (travelVoucher != null)
                             {
                                 Console.Write("Input country: ");
@@ -251,7 +251,7 @@ namespace TouristConsole
                             var phone = Console.ReadLine();
                             Console.Write("Input salary");
                             var salary = Convert.ToInt32(Console.ReadLine());
-                            var staff = new StaffDTO
+                            var staff = new Staff
                             {
                                 FirstName = firstName,
                                 LastName = lastName,
@@ -270,7 +270,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id staff: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var staff = presentationStaff.GetCollectionStaffs().Where(el => el.Id == id).FirstOrDefault();
+                            var staff = presentationStaff.GetCollectionStaffs().Result.Where(el => el.Id == id).FirstOrDefault();
                             if (staff != null)
                             {
                                 Console.Write("Input firstname: ");
@@ -308,9 +308,9 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input name service: ");
                             var name = Console.ReadLine();
-                            var services = new ServicesDTO
+                            var services = new Service
                             {
-                                NameServices = name,
+                                Name = name,
                             };
                             presentationService.CreateService(services);
                             Console.ReadKey();
@@ -322,7 +322,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id service: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var service = presentationService.GetCollectionServices().Where(el => el.Id == id).FirstOrDefault();
+                            var service = presentationService.GetCollectionServices().Result.Where(el => el.Id == id).FirstOrDefault();
                             if (service != null)
                             {
                                 Console.Write("Input name service: ");
@@ -347,7 +347,7 @@ namespace TouristConsole
                     case 16:
                         {
                             Console.Clear();
-                            presentationUser.GetCollectionUsers().ToList().ForEach(el => Console.WriteLine(el));
+                            presentationUser.GetCollectionUsers().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -355,7 +355,7 @@ namespace TouristConsole
                     case 17:
                         {
                             Console.Clear();
-                            presentationHotel.GetCollectionHotels().ToList().ForEach(el => Console.WriteLine(el));
+                            presentationHotel.GetCollectionHotels().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -363,7 +363,7 @@ namespace TouristConsole
                     case 18:
                         {
                             Console.Clear();
-                            presentationTravelVoucher.GetCollectionTravelVouchers().ToList().ForEach(el => Console.WriteLine(el));
+                            presentationTravelVoucher.GetCollectionTravelVouchers().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -371,7 +371,7 @@ namespace TouristConsole
                     case 19:
                         {
                             Console.Clear();
-                            presentationStaff.GetCollectionStaffs().ToList().ForEach(el => Console.WriteLine(el));
+                            presentationStaff.GetCollectionStaffs().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -379,7 +379,7 @@ namespace TouristConsole
                     case 20:
                         {
                             Console.Clear();
-                            presentationService.GetCollectionServices().ToList().ForEach(el => Console.WriteLine(el));
+                            presentationService.GetCollectionServices().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -409,7 +409,7 @@ namespace TouristConsole
             Console.WriteLine("1. Add user");
             Console.WriteLine("2. Update user");
             Console.WriteLine("3. Delete user");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("4. Add hotel");
             Console.WriteLine("5. Update hotek");
             Console.WriteLine("6. Delete hotel");
@@ -417,7 +417,7 @@ namespace TouristConsole
             Console.WriteLine("7. Add travel voucher");
             Console.WriteLine("8. Update travel voucher");
             Console.WriteLine("9. Delete travel voucher");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("10. Add staff");
             Console.WriteLine("11. Update staff");
             Console.WriteLine("12. Delete staff");

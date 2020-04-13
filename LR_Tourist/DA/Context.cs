@@ -5,15 +5,15 @@ namespace DA
 {
     public class Context : DbContext
     {
-        public DbSet<TravelVoucher> TravelVouchers { get; set; }
+        public DbSet<TravelVoucherDTO> TravelVouchers { get; set; }
 
-        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<HotelDTO> Hotels { get; set; }
 
-        public DbSet<Data.Services> Services { get; set; }
+        public DbSet<Data.ServiceDTO> Services { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserDTO> Users { get; set; }
 
-        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<StaffDTO> Staffs { get; set; }
 
         public Context()
         {

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DA.Services.Repository
 {
@@ -16,25 +17,27 @@ namespace DA.Services.Repository
             Context = new Context();
         }
 
-        IEnumerable<T> IRepository<T>.GetAll()
+        async Task<IEnumerable<T>> IRepository<T>.GetAll()
         {
-            return Context.Set<T>().ToList();
+            return await Context.Set<T>().ToListAsync();
         }
 
-        public void Create(T item)
+        public async Task Create(T item)
         {
-            Context.Set<T>().Add(item);
+            await Context.Set<T>().AddAsync(item);
+            await Context.SaveChangesAsync();
         }
 
-        public void Update(T item)
+        public async Task Update(T item)
         {
-            var entry = Context.Set<T>().First(e => e.Id == item.Id );
+            var entry = await Context.Set<T>().FirstAsync(e => e.Id == item.Id);
             Context.Entry(entry).CurrentValues.SetValues(item);
+            await Context.SaveChangesAsync();
         }
 
-        public void Save()
+        public async Task Save()
         {
-            Context.SaveChanges();
+           await Context.SaveChangesAsync();
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)
@@ -42,18 +45,19 @@ namespace DA.Services.Repository
             return Context.Set<T>().Where(predicate).ToList();
         }
 
-        public T Get(int id)
+        public async Task<T> Get(int id)
         {
-            return Context.Set<T>().Find(id);
+            return await Context.Set<T>().FindAsync(id);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var item = Context.Set<T>().Find(id);
             if (item != null)
             {
-                Context.Set<T>().Remove(item);
+                 Context.Set<T>().Remove(item);
             }
+            await Context.SaveChangesAsync();
         }
     }
 }

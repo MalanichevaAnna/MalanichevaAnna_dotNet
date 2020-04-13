@@ -1,6 +1,7 @@
 ﻿using BLL.Model;
 using BLL.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TouristConsole
 {
@@ -13,26 +14,26 @@ namespace TouristConsole
             this.serviceHotel = serviceHotel;
         }
 
-        public IEnumerable<HotelDTO> GetCollectionHotels()
+        public async Task<IEnumerable<Hotel>> GetCollectionHotels()
         {
-            IEnumerable<HotelDTO> hotelsDTO = serviceHotel.GetItems();
+            IEnumerable<Hotel> hotelsDTO = await serviceHotel.GetItems();
             return hotelsDTO;
         }
-        public HotelDTO GetHotel(int? id)
+        public async Task<Hotel> GetHotel(int id)
         {
-            return serviceHotel.GetItem(id);
+            return await serviceHotel.GetItem(id);
         }
-        public void CreateHotel(HotelDTO hotelDTO)
+        public async void CreateHotel(Hotel hotelDTO)
         {
-            serviceHotel.Create(hotelDTO);
+            await serviceHotel.Create(hotelDTO);
         }
-        public void UpdateHotel(HotelDTO hotelDTO)
+        public async void UpdateHotel(Hotel hotelDTO)
         {
-            serviceHotel.Update(hotelDTO);
+            await serviceHotel.Update(hotelDTO);
         }
-        public void DeleteHotel(int id)
+        public async void DeleteHotel(int id)
         {
-            serviceHotel.Delete(id);
+            await serviceHotel.Delete(id);
         }
     }
 }

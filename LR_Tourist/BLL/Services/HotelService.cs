@@ -6,50 +6,45 @@ using DA.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class HotelService : IService<HotelDTO>,ICRUDService<HotelDTO>
+    public class HotelService : IService<Hotel>,ICRUDService<Hotel>
     {
-        IRepository<Hotel> repoHotel { get; set; }
+        private readonly IRepository<HotelDTO> repoHotel;
+
         private readonly IMapper _mapper;
 
-        public HotelService(IRepository<Hotel> repositoryHotel, IMapper mapper)
+        public HotelService(IRepository<HotelDTO> repositoryHotel, IMapper mapper)
         {
             repoHotel = repositoryHotel;
             _mapper = mapper;
         }
 
-        public HotelDTO GetItem(int? id)
+        public async Task<Hotel> GetItem(int id)
         {
-            if (id == null)
-            {
-                throw new ArgumentException("Not installed id");
-            }
-
-            var hotel = repoHotel.Get(id.Value);
-
+            var hotel = await repoHotel.Get(id);
             if (hotel == null)
             {
-                throw new ArgumentException("Services not found");
+                throw new ArgumentException("Hotel not found");
             }
 
-            return new HotelDTO
+            return new Hotel
             {
                 Id = hotel.Id,
-                NameHotel = hotel.NameHotel,
+                Name = hotel.Name,
                 Star = hotel.Star,
                 Phone = hotel.Phone,
             };
-
         }
 
-        public IEnumerable<HotelDTO> GetItems()
+        public async Task<IEnumerable<Hotel>> GetItems()
         {
-              return _mapper.Map<IEnumerable<Hotel>, List<HotelDTO>>(repoHotel.GetAll());
+              return _mapper.Map<IEnumerable<HotelDTO>, List<Hotel>>( await repoHotel.GetAll());
         }
 
-        public void Create(HotelDTO item)
+        public async Task Create(Hotel item)
         {
             if(item == null)
             {
@@ -57,12 +52,11 @@ namespace BLL.Services
             }
             else
             {
-                repoHotel.Create(_mapper.Map<Hotel>(item));
-                Save();
+                await repoHotel.Create(_mapper.Map<HotelDTO>(item));
             }
         }
 
-        public void Update(HotelDTO item)
+        public async Task Update(Hotel item)
         {
             if (item == null)
             {
@@ -70,26 +64,20 @@ namespace BLL.Services
             }
             else
             {
-                repoHotel.Update(_mapper.Map<Hotel>(item));
-                Save();
+                await repoHotel.Update(_mapper.Map<HotelDTO>(item));
             }
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = GetItems().Where(el => el.Id == id).ToList();
+            var item = GetItems().Result.Where(el => el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
             else
             {
-                repoHotel.Delete(_mapper.Map<Hotel>(item[0]).Id);
-                Save();
+                await repoHotel.Delete(_mapper.Map<HotelDTO>(item[0]).Id);
             }
-        }
-        public void Save()
-        {
-            repoHotel.Save();
         }
     }
 }

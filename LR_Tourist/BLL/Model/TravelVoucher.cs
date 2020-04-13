@@ -2,7 +2,7 @@
 
 namespace BLL.Model
 {
-    public class TravelVoucherDTO: IEntityBaseDTO
+    public class TravelVoucher: IEntityBase
     {
         public int Id { get; set; }
         public string Country { get; set; }

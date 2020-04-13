@@ -1,11 +1,11 @@
 ﻿
 namespace DA.Data
 {
-    public class Hotel : IEntityBase
+    public class HotelDTO : IEntityBase
     {
         public int Id { get; set; }
 
-        public string NameHotel { get; set; }
+        public string Name { get; set; }
 
         public int Star { get; set; }
 

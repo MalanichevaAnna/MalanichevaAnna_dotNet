@@ -1,19 +1,17 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface ICRUDService<T>
         where T : class
     {
-        void Create(T item);
+        Task Create(T item);
 
-        void Update(T item);
+        Task Update(T item);
 
-        void Delete(int id);
-
-        void Save();
-
+        Task Delete(int id);
     }
 }

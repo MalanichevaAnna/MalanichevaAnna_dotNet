@@ -1,7 +1,7 @@
 ﻿
-namespace BLL.Model
+namespace DA.Data
 {
-    public class UserDTO : IPersonDTO, IEntityBaseDTO
+    public class UserDTO : IPerson, IEntityBase
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -13,10 +13,5 @@ namespace BLL.Model
         public string Phone { get; set; }
 
         public string Address { get; set; }
-
-        public override string ToString()
-        {
-            return $"{Id} {FirstName} {LastName} {MiddleName} {Phone} {Address}";
-        }
     }
 }

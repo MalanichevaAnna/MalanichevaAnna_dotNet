@@ -1,6 +1,7 @@
 ﻿using BLL.Model;
 using BLL.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TouristConsole
 {
@@ -13,36 +14,35 @@ namespace TouristConsole
             this.serviceTravelVoucher = serviceTravelVoucher;
         }
 
-        public void MakeOrder(int idTravelVoucher, int idUser)
+        public async void MakeOrder(int idTravelVoucher, int idUser)
         {
-
-            serviceTravelVoucher.MakeOrder(idTravelVoucher, idUser);
+            await serviceTravelVoucher.MakeOrder(idTravelVoucher, idUser);
         }
 
-        public IEnumerable<TravelVoucherDTO> GetCollectionTravelVouchers()
+        public async Task<IEnumerable<TravelVoucher>> GetCollectionTravelVouchers()
         {
-            IEnumerable<TravelVoucherDTO> travelVouchersDTO = serviceTravelVoucher.GetTravelVouchers();
+            IEnumerable<TravelVoucher> travelVouchersDTO = await serviceTravelVoucher.GetTravelVouchers();
             return travelVouchersDTO;
         }
 
-        public TravelVoucherDTO GetTravelVouher(int? id)
+        public async Task<TravelVoucher> GetTravelVouher(int id)
         {
-            return serviceTravelVoucher.GetTravelVoucher(id);
+            return await serviceTravelVoucher.GetTravelVoucher(id);
         }
 
-        public void CreateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
+        public async void CreateTravelVoucher(TravelVoucher profileTravelVoucher)
         {
-            serviceTravelVoucher.Create(profileTravelVoucher);
+            await serviceTravelVoucher.Create(profileTravelVoucher);
         }
 
-        public void UpdateTravelVoucher(TravelVoucherDTO profileTravelVoucher)
+        public async void UpdateTravelVoucher(TravelVoucher profileTravelVoucher)
         {
-            serviceTravelVoucher.Update(profileTravelVoucher);
+            await serviceTravelVoucher.Update(profileTravelVoucher);
         }
 
-        public void DeleteTravelVoucher(int id)
+        public async void DeleteTravelVoucher(int id)
         {
-            serviceTravelVoucher.Delete(id);
+            await serviceTravelVoucher.Delete(id);
         }
     }
 }

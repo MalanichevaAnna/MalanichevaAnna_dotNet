@@ -6,28 +6,29 @@ using DA.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class TravelVoucherService : ITravelVoucher, ICRUDService<Model.TravelVoucherDTO>
+    public class TravelVoucherService : ITravelVoucherService, ICRUDService<TravelVoucher>
     {
-        IRepository<User> repoUser { get; set; }
+        IRepository<UserDTO> repoUser { get; set; }
 
-        IRepository<Hotel> repoHotel { get; set; }
+        IRepository<HotelDTO> repoHotel { get; set; }
 
-        IRepository<Staff> repoStaff { get; set; }
+        IRepository<StaffDTO> repoStaff { get; set; }
 
-        IRepository<DA.Data.Services> repoService { get; set; }
+        IRepository<ServiceDTO> repoService { get; set; }
 
-        IRepository<DA.Data.TravelVoucher> repoTravelVoucher { get; set; }
+        IRepository<TravelVoucherDTO> repoTravelVoucher { get; set; }
         
         private readonly IMapper _mapper;
         
-        public TravelVoucherService(IRepository<User> repositoryUser,
-                                    IRepository<DA.Data.TravelVoucher> repositoryTravelVoucher, 
-                                    IRepository<Staff> repositoryStaff,
-                                    IRepository<DA.Data.Services> repositoryService,
-                                    IRepository<Hotel> repositoryHotel,
+        public TravelVoucherService(IRepository<UserDTO> repositoryUser,
+                                    IRepository<TravelVoucherDTO> repositoryTravelVoucher, 
+                                    IRepository<StaffDTO> repositoryStaff,
+                                    IRepository<ServiceDTO> repositoryService,
+                                    IRepository<HotelDTO> repositoryHotel,
                                     IMapper mapper)
         {
             repoUser = repositoryUser;
@@ -37,18 +38,15 @@ namespace BLL.Services
             repoHotel = repositoryHotel;
             _mapper = mapper;
         }
-        public TravelVoucherDTO GetTravelVoucher(int? id)
+        public async Task<TravelVoucher> GetTravelVoucher(int id)
         {
-            if (id == null)
-            {
-                throw new ArgumentException("Check id travel voucher");
-            }
-               
-            var travelVoucher = repoTravelVoucher.Get(id.Value);
+            var travelVoucher = await repoTravelVoucher.Get(id);
             if (travelVoucher == null)
+            {
                 throw new ArgumentNullException(nameof(travelVoucher));
+            }
 
-            return new TravelVoucherDTO {
+            return new Model.TravelVoucher {
                 Country = travelVoucher.Country,
                 Arrival = travelVoucher.Arrival,
                 Departure = travelVoucher.Departure,
@@ -60,16 +58,15 @@ namespace BLL.Services
             };
         }
 
-        public IEnumerable<Model.TravelVoucherDTO> GetTravelVouchers()
+        public async Task<IEnumerable<TravelVoucher>> GetTravelVouchers()
         {
-            return _mapper.Map<IEnumerable<TravelVoucher>, List<TravelVoucherDTO>>(repoTravelVoucher.GetAll());
+            return _mapper.Map<IEnumerable<TravelVoucherDTO>, List<TravelVoucher>>(await repoTravelVoucher.GetAll());
         }
 
-        public void MakeOrder(int idTravelVoucher,int idUser)
+        public async Task MakeOrder(int idTravelVoucher,int idUser)
         {
-            var user = repoUser.Get(idUser);
-            var travelVoucher = repoTravelVoucher.Get(idTravelVoucher);
-            // валидация
+            var user = await repoUser.Get(idUser);
+            var travelVoucher = await repoTravelVoucher.Get(idTravelVoucher);
             if (user == null)
             {
                 throw new ArgumentException("user not found");
@@ -78,13 +75,11 @@ namespace BLL.Services
             {
                 throw new ArgumentException("Travel voucher not found", "");
             }
-
             travelVoucher.UserId = user.Id;
-            Update(_mapper.Map <TravelVoucherDTO>(travelVoucher));
-            repoTravelVoucher.Save();
+            await Update(_mapper.Map <TravelVoucher>(travelVoucher));
         }
 
-        public void Create(TravelVoucherDTO item)
+        public async Task Create(TravelVoucher item)
         {
             if (item == null)
             {
@@ -92,16 +87,14 @@ namespace BLL.Services
             }
             else
             {
-                
                 if (CheckId(item.StaffId, item.HotelId,item.ServicesId,item.UserId))
                 {
                     throw new ArgumentException("Check id");
                 }
                 else
                 {
-                    repoTravelVoucher.Create(_mapper.Map<DA.Data.TravelVoucher>(item));
+                    await repoTravelVoucher.Create(_mapper.Map<TravelVoucherDTO>(item));
                 }
-                Save();
             }
         }
 
@@ -126,7 +119,7 @@ namespace BLL.Services
             }
         }
 
-        public void Update(Model.TravelVoucherDTO item)
+        public async Task Update(Model.TravelVoucher item)
         {
             if (item == null)
             {
@@ -138,27 +131,20 @@ namespace BLL.Services
                 {
                     throw new ArgumentException("Check id");
                 }
-                repoTravelVoucher.Update(_mapper.Map<DA.Data.TravelVoucher>(item));
-                Save();
+                await repoTravelVoucher.Update(_mapper.Map<DA.Data.TravelVoucherDTO>(item));
             }
         }
-
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = GetTravelVouchers().Where(el => el.Id == id).ToList();
+            var item = GetTravelVouchers().Result.Where(el => el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
             else
             {
-                repoTravelVoucher.Delete(_mapper.Map<TravelVoucher>(item[0]).Id);
-                Save();
+                await repoTravelVoucher.Delete(_mapper.Map<DA.Data.TravelVoucherDTO>(item[0]).Id);
             }
-        }
-        public void Save()
-        {
-            repoTravelVoucher.Save();
         }
     }
 }
