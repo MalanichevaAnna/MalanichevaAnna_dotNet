@@ -1,11 +1,10 @@
 ﻿
-using DA.Data;
-
 namespace BLL.Model
 {
     public class Hotel: DA.Data.IEntityBase
     {
-        public int Id { get; set; }
+        public int Id { get; }
+
         public string Name { get; set; }
 
         public int Star { get; set; }

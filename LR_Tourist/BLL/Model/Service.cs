@@ -1,11 +1,9 @@
 ﻿
-using DA.Data;
-
 namespace BLL.Model
 {
-    public class Service: DA.Data.IEntityBase
+    public class Service: IEntityBase
     {
-        public int Id { get; set; }
+        public int Id { get;}
 
         public string Name { get; set; }
 

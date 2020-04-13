@@ -3,7 +3,7 @@ namespace DA.Data
 {
     public class HotelDTO : IEntityBase
     {
-        public int Id { get; set; }
+        public int Id { get; }
 
         public string Name { get; set; }
 

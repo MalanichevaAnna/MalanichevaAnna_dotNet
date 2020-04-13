@@ -1,6 +1,4 @@
-﻿
-using BLL.Model;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
