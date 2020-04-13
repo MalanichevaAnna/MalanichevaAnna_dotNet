@@ -22,6 +22,6 @@ namespace Tourist
                 logger.Error(ex, ex.Message);
             }
         }
-    }        
+    }
 }
 
