@@ -7,11 +7,11 @@ namespace BLL.Model
     {
         public int Id { get; set; }
 
-        public string NameServices { get; set; }
+        public string Name { get; set; }
 
         public override string ToString()
         {
-            return $"{Id} {NameServices}";
+            return $"{Id} {Name}";
         }
     }
 }

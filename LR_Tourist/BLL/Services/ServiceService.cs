@@ -32,7 +32,7 @@ namespace BLL.Services
             return new Service
             {
                 Id = services.Id,
-                NameServices = services.NameServices,
+                Name = services.NameServices,
             };
         }
 

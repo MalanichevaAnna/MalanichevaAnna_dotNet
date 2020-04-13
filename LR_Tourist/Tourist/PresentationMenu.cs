@@ -118,7 +118,7 @@ namespace TouristConsole
                             var phone = Console.ReadLine();
                             var hotel = new Hotel
                             {
-                                NameHotel = name,
+                                Name = name,
                                 Star = star,
                                 Phone = phone,
                             };
@@ -141,7 +141,7 @@ namespace TouristConsole
                                 var star = Convert.ToInt32(Console.ReadLine());
                                 Console.Write("Input phone: ");
                                 var phone = Console.ReadLine();
-                                hotel.NameHotel = name;
+                                hotel.Name = name;
                                 hotel.Star = star;
                                 hotel.Phone = phone;
                                 await serviceHotel.Update(hotel);
@@ -317,7 +317,7 @@ namespace TouristConsole
                             var name = Console.ReadLine();
                             var services = new Service
                             {
-                                NameServices = name,
+                                Name = name,
                             };
                             await service.Create(services);
                             Console.ReadKey();
