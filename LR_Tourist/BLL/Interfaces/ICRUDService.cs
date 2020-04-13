@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace BLL.Interfaces
 {
     public interface ICRUDService<T>
-        where T : class, IEntityBase
+        where T : class
     {
         Task Create(T item);
 

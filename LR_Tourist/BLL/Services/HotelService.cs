@@ -33,7 +33,7 @@ namespace BLL.Services
             return new Hotel
             {
                 Id = hotel.Id,
-                Name = hotel.Name,
+                NameHotel = hotel.NameHotel,
                 Star = hotel.Star,
                 Phone = hotel.Phone,
             };

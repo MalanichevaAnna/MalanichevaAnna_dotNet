@@ -1,28 +1,35 @@
 ﻿using BLL.Model;
+using BLL.Services;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+
 namespace TouristConsole
 {
     public class PresentationMenu
     {
+        private readonly HotelService serviceHotel;
 
-        private readonly PresentationHotel presentationHotel;
-        private readonly PresentationTravelVoucher presentationTravelVoucher;
-        private readonly PresentationUser presentationUser;
-        private readonly PresentationStaff presentationStaff;
-        private readonly PresentationService presentationService;
-        public PresentationMenu(PresentationHotel presentationHotel, PresentationTravelVoucher presentationTravelVoucher, 
-                                PresentationUser presentationUser, PresentationStaff presentationStaff,
-                                PresentationService presentationService)
+        private readonly ServiceService service;
+        
+        private readonly StaffService serviceStaff;
+        
+        private readonly TravelVoucherService serviceTravelVoucher;
+        
+        private readonly UserService serviceUser;
+
+        public PresentationMenu(HotelService serviceHotel, ServiceService service, 
+                                StaffService serviceStaff, TravelVoucherService serviceTravelVoucher,
+                                UserService serviceUser)
         {
-            this.presentationHotel = presentationHotel;
-            this.presentationTravelVoucher = presentationTravelVoucher;
-            this.presentationUser = presentationUser;
-            this.presentationStaff = presentationStaff;
-            this.presentationService = presentationService;
+            this.serviceHotel = serviceHotel;
+            this.service = service;
+            this.serviceStaff = serviceStaff;
+            this.serviceTravelVoucher = serviceTravelVoucher;
+            this.serviceUser = serviceUser;
         }
 
-        public void StartAppSession()
+        public async Task StartAppSession()
         {
             int numberMenu = -1;
             while (numberMenu != 0)
@@ -55,7 +62,7 @@ namespace TouristConsole
                                 Phone = phone,
 
                             };
-                            presentationUser.CreateUser(user);
+                            await serviceUser.Create(user);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -65,7 +72,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id user: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var user = presentationUser.GetCollectionUsers().Result.Where(el => el.Id == id).FirstOrDefault();
+                            var user = serviceUser.GetItems().Result.Where(el => el.Id == id).FirstOrDefault();
                             if(user != null)
                             {
                                 Console.Write("Input firstname: ");
@@ -83,7 +90,7 @@ namespace TouristConsole
                                 user.MiddleName = middleName;
                                 user.Address = address;
                                 user.Phone = phone;
-                                presentationUser.UpdateUser(user);
+                                await serviceUser.Update(user);
                                 Console.ReadKey();
                                 Console.Clear();
                             }
@@ -94,7 +101,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id user for delete: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            presentationUser.DeleteUser(id);
+                            await serviceUser.Delete(id);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -111,11 +118,11 @@ namespace TouristConsole
                             var phone = Console.ReadLine();
                             var hotel = new Hotel
                             {
-                                Name = name,
+                                NameHotel = name,
                                 Star = star,
                                 Phone = phone,
                             };
-                            presentationHotel.CreateHotel(hotel);
+                            await serviceHotel.Create(hotel);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -125,7 +132,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id hotel: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var hotel = presentationHotel.GetCollectionHotels().Result.Where(el => el.Id == id).FirstOrDefault();
+                            var hotel = serviceHotel.GetItems().Result.Where(el => el.Id == id).FirstOrDefault();
                             if(hotel != null)
                             {
                                 Console.Write("Input name: ");
@@ -134,10 +141,10 @@ namespace TouristConsole
                                 var star = Convert.ToInt32(Console.ReadLine());
                                 Console.Write("Input phone: ");
                                 var phone = Console.ReadLine();
-                                hotel.Name = name;
+                                hotel.NameHotel = name;
                                 hotel.Star = star;
                                 hotel.Phone = phone;
-                                presentationHotel.UpdateHotel(hotel);
+                                await serviceHotel.Update(hotel);
                             }
                             Console.ReadKey();
                             Console.Clear();
@@ -148,7 +155,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id hotel for delete: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            presentationHotel.DeleteHotel(id);
+                            await serviceHotel.Delete(id);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -183,7 +190,7 @@ namespace TouristConsole
                                 StaffId = staffId,
                                 UserId = userId,
                             };
-                            presentationTravelVoucher.CreateTravelVoucher(travelVoucher);
+                            await serviceTravelVoucher.Create(travelVoucher);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -193,7 +200,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id travel voucher: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var travelVoucher = presentationTravelVoucher.GetCollectionTravelVouchers().Result.Where(el=>el.Id == id).FirstOrDefault();
+                            var travelVoucher = serviceTravelVoucher.GetTravelVouchers().Result.Where(el=>el.Id == id).FirstOrDefault();
                             if (travelVoucher != null)
                             {
                                 Console.Write("Input country: ");
@@ -220,7 +227,7 @@ namespace TouristConsole
                                 travelVoucher.HotelId = hotelId;
                                 travelVoucher.StaffId = staffId;
                                 travelVoucher.UserId = userId;
-                                presentationTravelVoucher.UpdateTravelVoucher(travelVoucher);
+                                await serviceTravelVoucher.Update(travelVoucher);
                             }
                             Console.ReadKey();
                             Console.Clear();
@@ -231,7 +238,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id travel voucher for delete: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            presentationTravelVoucher.DeleteTravelVoucher(id);
+                            await serviceTravelVoucher.Delete(id);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -260,7 +267,7 @@ namespace TouristConsole
                                 Salary = salary,
                                 Role = role,
                             };
-                            presentationStaff.CreateStaff(staff);
+                            await serviceStaff.Create(staff);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -270,7 +277,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id staff: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var staff = presentationStaff.GetCollectionStaffs().Result.Where(el => el.Id == id).FirstOrDefault();
+                            var staff = serviceStaff.GetItems().Result.Where(el => el.Id == id).FirstOrDefault();
                             if (staff != null)
                             {
                                 Console.Write("Input firstname: ");
@@ -287,7 +294,7 @@ namespace TouristConsole
                                 var phone = Console.ReadLine();
                                 Console.Write("Input salary");
                                 var salary = Convert.ToInt32(Console.ReadLine());
-                                presentationStaff.UpdateStaff(staff);
+                                await serviceStaff.Update(staff);
                                 Console.ReadKey();
                                 Console.Clear();
                             }
@@ -298,7 +305,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id staff for delete: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            presentationStaff.DeleteStaff(id);
+                            await serviceStaff.Delete(id);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -310,9 +317,9 @@ namespace TouristConsole
                             var name = Console.ReadLine();
                             var services = new Service
                             {
-                                Name = name,
+                                NameServices = name,
                             };
-                            presentationService.CreateService(services);
+                            await service.Create(services);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -322,12 +329,12 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id service: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var service = presentationService.GetCollectionServices().Result.Where(el => el.Id == id).FirstOrDefault();
+                            var serviceItem = service.GetItems().Result.Where(el => el.Id == id).FirstOrDefault();
                             if (service != null)
                             {
                                 Console.Write("Input name service: ");
                                 var name = Console.ReadLine();
-                                presentationService.UpdateService(service);
+                                await service.Update(serviceItem);
                                 Console.ReadKey();
                                 Console.Clear();
                             }
@@ -338,7 +345,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id service for delete: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            presentationService.DeleteService(id);
+                            await service.Delete(id);
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -347,7 +354,7 @@ namespace TouristConsole
                     case 16:
                         {
                             Console.Clear();
-                            presentationUser.GetCollectionUsers().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            serviceUser.GetItems().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -355,7 +362,7 @@ namespace TouristConsole
                     case 17:
                         {
                             Console.Clear();
-                            presentationHotel.GetCollectionHotels().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            serviceHotel.GetItems().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -363,7 +370,7 @@ namespace TouristConsole
                     case 18:
                         {
                             Console.Clear();
-                            presentationTravelVoucher.GetCollectionTravelVouchers().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            serviceTravelVoucher.GetTravelVouchers().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -371,7 +378,7 @@ namespace TouristConsole
                     case 19:
                         {
                             Console.Clear();
-                            presentationStaff.GetCollectionStaffs().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            serviceStaff.GetItems().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -379,7 +386,7 @@ namespace TouristConsole
                     case 20:
                         {
                             Console.Clear();
-                            presentationService.GetCollectionServices().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            service.GetItems().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;
@@ -390,7 +397,7 @@ namespace TouristConsole
                             Console.WriteLine("Input id user");
                             var idUser = Convert.ToInt32(Console.ReadLine());
                             var idTravelVoucher = Convert.ToInt32(Console.ReadLine());
-                            presentationTravelVoucher.MakeOrder(idTravelVoucher,idUser);
+                            await serviceTravelVoucher.MakeOrder(idTravelVoucher,idUser);
                             Console.ReadKey();
                             Console.Clear();
                             break;
