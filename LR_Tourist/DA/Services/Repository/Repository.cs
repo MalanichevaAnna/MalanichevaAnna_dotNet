@@ -17,7 +17,7 @@ namespace DA.Services.Repository
             Context = new Context();
         }
 
-        async Task<IEnumerable<T>> IRepository<T>.GetAll()
+        public async Task<IEnumerable<T>> GetAll()
         {
             return await Context.Set<T>().ToListAsync();
         }
@@ -33,11 +33,6 @@ namespace DA.Services.Repository
             var entry = await Context.Set<T>().FirstAsync(e => e.Id == item.Id);
             Context.Entry(entry).CurrentValues.SetValues(item);
             await Context.SaveChangesAsync();
-        }
-
-        public async Task Save()
-        {
-           await Context.SaveChangesAsync();
         }
 
         public IEnumerable<T> Find(Func<T, bool> predicate)

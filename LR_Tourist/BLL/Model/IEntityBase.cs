@@ -3,6 +3,6 @@ namespace BLL.Model
 {
     public interface IEntityBase
     {
-        int Id { get;}
+        int Id { get; }
     }
 }
