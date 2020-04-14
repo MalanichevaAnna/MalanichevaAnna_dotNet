@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Tourist
 {
@@ -14,9 +15,11 @@ namespace Tourist
             var logger = LogManager.GetCurrentClassLogger();
             try
             {
-                var builder = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")                    
-                var services = Startup.Configure();
+                var builder = new ConfigurationBuilder();
+                builder.SetBasePath(Directory.GetCurrentDirectory());
+                builder.AddJsonFile("appsettings.json");
+                var config = builder.Build();
+                var services = Startup.Configure(config);
                 var mainPresentation = services.GetService<PresentationMenu>();
                 await mainPresentation.StartAppSession();
             }
