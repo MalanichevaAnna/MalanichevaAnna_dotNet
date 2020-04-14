@@ -1,4 +1,5 @@
 ﻿using BLL.Model;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BLL.Interfaces
@@ -11,5 +12,9 @@ namespace BLL.Interfaces
         Task Update(T item);
 
         Task Delete(int id);
+
+        Task<T> GetItem(int id);
+
+        Task<IEnumerable<T>> GetItems();
     }
 }

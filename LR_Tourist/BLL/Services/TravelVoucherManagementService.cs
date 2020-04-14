@@ -38,7 +38,7 @@ namespace BLL.Services
             repoHotel = repositoryHotel;
             _mapper = mapper;
         }
-        public async Task<TravelVoucher> GetTravelVoucher(int id)
+        public async Task<TravelVoucher> GetItem(int id)
         {
             var travelVoucher = await repoTravelVoucher.Get(id);
             if (travelVoucher == null)
@@ -58,7 +58,7 @@ namespace BLL.Services
             };
         }
 
-        public async Task<IEnumerable<TravelVoucher>> GetTravelVouchers()
+        public async Task<IEnumerable<TravelVoucher>> GetItems()
         {
             return _mapper.Map<IEnumerable<TravelVoucherDTO>, List<TravelVoucher>>(await repoTravelVoucher.GetAll());
         }
@@ -135,7 +135,7 @@ namespace BLL.Services
         }
         public async Task Delete(int id)
         {
-            var item = GetTravelVouchers().Result.Where(el => el.Id == id).ToList();
+            var item = GetItems().Result.Where(el => el.Id == id).ToList();
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));

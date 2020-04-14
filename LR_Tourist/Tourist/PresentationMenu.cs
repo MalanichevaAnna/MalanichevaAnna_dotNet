@@ -200,7 +200,7 @@ namespace TouristConsole
                             Console.Clear();
                             Console.Write("Input id travel voucher: ");
                             var id = Convert.ToInt32(Console.ReadLine());
-                            var travelVoucher = serviceTravelVoucher.GetTravelVouchers().Result.Where(el=>el.Id == id).FirstOrDefault();
+                            var travelVoucher = serviceTravelVoucher.GetItems().Result.Where(el=>el.Id == id).FirstOrDefault();
                             if (travelVoucher != null)
                             {
                                 Console.Write("Input country: ");
@@ -370,7 +370,7 @@ namespace TouristConsole
                     case 18:
                         {
                             Console.Clear();
-                            serviceTravelVoucher.GetTravelVouchers().Result.ToList().ForEach(el => Console.WriteLine(el));
+                            serviceTravelVoucher.GetItems().Result.ToList().ForEach(el => Console.WriteLine(el));
                             Console.ReadKey();
                             Console.Clear();
                             break;

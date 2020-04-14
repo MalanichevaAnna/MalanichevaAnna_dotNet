@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class HotelManagementService : IService<Hotel>,IEntityManagementService<Hotel>
+    public class HotelManagementService : IEntityManagementService<Hotel>
     {
         private readonly IRepository<HotelDTO> repoHotel;
 

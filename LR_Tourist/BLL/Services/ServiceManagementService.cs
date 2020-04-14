@@ -10,7 +10,7 @@ using DA.Services.Repository;
 
 namespace BLL.Services
 {
-    public class ServiceManagementService : IService<Service>, IEntityManagementService<Service>
+    public class ServiceManagementService : IEntityManagementService<Service>
     {
         private readonly IRepository<ServiceDTO> repoServices;
 

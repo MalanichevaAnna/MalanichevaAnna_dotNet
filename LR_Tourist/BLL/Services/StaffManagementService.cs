@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class StaffManagementService: IService<Staff>,IEntityManagementService<Staff>
+    public class StaffManagementService: IEntityManagementService<Staff>
     {
         private readonly IRepository<StaffDTO> repoStaff;
 
