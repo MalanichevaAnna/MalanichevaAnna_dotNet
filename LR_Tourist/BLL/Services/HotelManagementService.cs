@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class HotelService : IService<Hotel>,ICRUDService<Hotel>
+    public class HotelManagementService : IService<Hotel>,IEntityManagementService<Hotel>
     {
         private readonly IRepository<HotelDTO> repoHotel;
 
         private readonly IMapper _mapper;
 
-        public HotelService(IRepository<HotelDTO> repositoryHotel, IMapper mapper)
+        public HotelManagementService(IRepository<HotelDTO> repositoryHotel, IMapper mapper)
         {
             repoHotel = repositoryHotel;
             _mapper = mapper;
@@ -33,7 +33,7 @@ namespace BLL.Services
             return new Hotel
             {
                 Id = hotel.Id,
-                NameHotel = hotel.NameHotel,
+                Name = hotel.Name,
                 Star = hotel.Star,
                 Phone = hotel.Phone,
             };
@@ -41,7 +41,7 @@ namespace BLL.Services
 
         public async Task<IEnumerable<Hotel>> GetItems()
         {
-              return _mapper.Map<IEnumerable<HotelDTO>, List<Hotel>>( await repoHotel.GetAll());
+            return _mapper.Map<IEnumerable<HotelDTO>, List<Hotel>>( await repoHotel.GetAll());
         }
 
         public async Task Create(Hotel item)

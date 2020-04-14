@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
-    public interface ICRUDService<T>
+    public interface IEntityManagementService<T>
         where T : class, IEntityBase
     {
         Task Create(T item);

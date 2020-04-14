@@ -5,16 +5,17 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BLL.Interfaces;
 using BLL.Model;
+using DA.Data;
 using DA.Services.Repository;
 
 namespace BLL.Services
 {
-    public class ServiceService : IService<Service>, ICRUDService<Service>
+    public class ServiceManagementService : IService<Service>, IEntityManagementService<Service>
     {
-        private readonly IRepository<DA.Data.ServiceDTO> repoServices;
+        private readonly IRepository<ServiceDTO> repoServices;
 
         private readonly IMapper _mapper;
-        public ServiceService(IRepository<DA.Data.ServiceDTO> repositoryServices, IMapper mapper)
+        public ServiceManagementService(IRepository<ServiceDTO> repositoryServices, IMapper mapper)
         {
             repoServices = repositoryServices;
             _mapper = mapper;
@@ -32,13 +33,13 @@ namespace BLL.Services
             return new Service
             {
                 Id = services.Id,
-                Name = services.NameServices,
+                Name = services.Name,
             };
         }
 
         public async Task<IEnumerable<Service>> GetItems()
         {
-            return _mapper.Map<IEnumerable<DA.Data.ServiceDTO>, List<Service>>( await repoServices.GetAll());
+            return _mapper.Map<IEnumerable<ServiceDTO>, List<Service>>( await repoServices.GetAll());
         }
 
         public async Task Create(Service item)
@@ -49,7 +50,7 @@ namespace BLL.Services
             }
             else
             {
-                await repoServices.Create(_mapper.Map<DA.Data.ServiceDTO>(item));
+                await repoServices.Create(_mapper.Map<ServiceDTO>(item));
             }
         }
 
@@ -61,7 +62,7 @@ namespace BLL.Services
             }
             else
             {
-                await repoServices.Update(_mapper.Map <DA.Data.ServiceDTO>(item));
+                await repoServices.Update(_mapper.Map <ServiceDTO>(item));
             }
         }
 
@@ -74,7 +75,7 @@ namespace BLL.Services
             }
             else
             {
-                await repoServices.Delete(_mapper.Map<DA.Data.ServiceDTO>(item[0]).Id);
+                await repoServices.Delete(_mapper.Map<ServiceDTO>(item[0]).Id);
             }
         }
     }

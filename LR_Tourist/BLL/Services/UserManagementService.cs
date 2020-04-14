@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : IService<User>, ICRUDService<User>
+    public class UserManagementService : IService<User>, IEntityManagementService<User>
     {
         private readonly IRepository<UserDTO> repoUser;
 
         private readonly IMapper _mapper;
 
-        public UserService(IRepository<UserDTO> repositoryUser, IMapper mapper)
+        public UserManagementService(IRepository<UserDTO> repositoryUser, IMapper mapper)
         {
             repoUser = repositoryUser;
             _mapper = mapper;

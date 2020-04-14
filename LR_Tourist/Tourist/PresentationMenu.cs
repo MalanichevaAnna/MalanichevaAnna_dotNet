@@ -8,19 +8,19 @@ namespace TouristConsole
 {
     public class PresentationMenu
     {
-        private readonly HotelService serviceHotel;
+        private readonly HotelManagementService serviceHotel;
 
-        private readonly ServiceService service;
+        private readonly ServiceManagementService service;
         
-        private readonly StaffService serviceStaff;
+        private readonly StaffManagementService serviceStaff;
         
-        private readonly TravelVoucherService serviceTravelVoucher;
+        private readonly TravelVoucherManagementService serviceTravelVoucher;
         
-        private readonly UserService serviceUser;
+        private readonly UserManagementService serviceUser;
 
-        public PresentationMenu(HotelService serviceHotel, ServiceService service, 
-                                StaffService serviceStaff, TravelVoucherService serviceTravelVoucher,
-                                UserService serviceUser)
+        public PresentationMenu(HotelManagementService serviceHotel, ServiceManagementService service, 
+                                StaffManagementService serviceStaff, TravelVoucherManagementService serviceTravelVoucher,
+                                UserManagementService serviceUser)
         {
             this.serviceHotel = serviceHotel;
             this.service = service;
@@ -118,7 +118,7 @@ namespace TouristConsole
                             var phone = Console.ReadLine();
                             var hotel = new Hotel
                             {
-                                NameHotel = name,
+                                Name = name,
                                 Star = star,
                                 Phone = phone,
                             };
@@ -141,7 +141,7 @@ namespace TouristConsole
                                 var star = Convert.ToInt32(Console.ReadLine());
                                 Console.Write("Input phone: ");
                                 var phone = Console.ReadLine();
-                                hotel.NameHotel = name;
+                                hotel.Name = name;
                                 hotel.Star = star;
                                 hotel.Phone = phone;
                                 await serviceHotel.Update(hotel);

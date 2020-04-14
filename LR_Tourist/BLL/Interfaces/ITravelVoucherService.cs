@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using BLL.Model;
+
 namespace BLL.Interfaces
 {
     public interface ITravelVoucherService
@@ -10,6 +11,5 @@ namespace BLL.Interfaces
         Task<TravelVoucher> GetTravelVoucher(int id);
 
         Task<IEnumerable<TravelVoucher>> GetTravelVouchers();
-
     }
 }

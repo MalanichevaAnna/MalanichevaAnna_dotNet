@@ -3,10 +3,7 @@ using BLL;
 using DA;
 using DA.Services.Repository;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace TouristConsole
 {
@@ -15,7 +12,7 @@ namespace TouristConsole
         public static ServiceProvider Configure()
         {
             var bl = Assembly.Load("BLL");
-            var pl = Assembly.Load("TouristConsole");
+            var pl = Assembly.Load("TouristConsoleApp");
 
             return new ServiceCollection()
                 .AddDbContext<Context>()

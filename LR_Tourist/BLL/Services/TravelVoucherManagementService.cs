@@ -10,21 +10,21 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class TravelVoucherService : ITravelVoucherService, ICRUDService<TravelVoucher>
+    public class TravelVoucherManagementService : ITravelVoucherService, IEntityManagementService<TravelVoucher>
     {
-        IRepository<UserDTO> repoUser { get; set; }
+        private readonly IRepository<UserDTO> repoUser;
 
-        IRepository<HotelDTO> repoHotel { get; set; }
+        private readonly IRepository<HotelDTO> repoHotel;
 
-        IRepository<StaffDTO> repoStaff { get; set; }
+        private readonly IRepository<StaffDTO> repoStaff;
 
-        IRepository<ServiceDTO> repoService { get; set; }
+        private readonly IRepository<ServiceDTO> repoService;
 
-        IRepository<TravelVoucherDTO> repoTravelVoucher { get; set; }
+        private readonly IRepository<TravelVoucherDTO> repoTravelVoucher;
         
         private readonly IMapper _mapper;
         
-        public TravelVoucherService(IRepository<UserDTO> repositoryUser,
+        public TravelVoucherManagementService(IRepository<UserDTO> repositoryUser,
                                     IRepository<TravelVoucherDTO> repositoryTravelVoucher, 
                                     IRepository<StaffDTO> repositoryStaff,
                                     IRepository<ServiceDTO> repositoryService,
@@ -67,14 +67,16 @@ namespace BLL.Services
         {
             var user = await repoUser.Get(idUser);
             var travelVoucher = await repoTravelVoucher.Get(idTravelVoucher);
+
             if (user == null)
             {
                 throw new ArgumentException("user not found");
             }
             else if(travelVoucher == null)
             {
-                throw new ArgumentException("Travel voucher not found", "");
+                throw new ArgumentException("Travel voucher not found");
             }
+
             travelVoucher.UserId = user.Id;
             await Update(_mapper.Map <TravelVoucher>(travelVoucher));
         }
@@ -98,7 +100,7 @@ namespace BLL.Services
             }
         }
 
-        public bool CheckId(int idStaff,int idHotel,int idService,int idUser)
+        private bool CheckId(int idStaff,int idHotel,int idService,int idUser)
         {
             try
             {
@@ -131,6 +133,7 @@ namespace BLL.Services
                 {
                     throw new ArgumentException("Check id");
                 }
+
                 await repoTravelVoucher.Update(_mapper.Map<DA.Data.TravelVoucherDTO>(item));
             }
         }
