@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using BLL.Model;
+﻿using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {

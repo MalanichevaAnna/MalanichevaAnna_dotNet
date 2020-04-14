@@ -1,5 +1,4 @@
-﻿
-namespace BLL.Model
+﻿namespace BLL.Model
 {
     public class Hotel: IEntityBase
     {
