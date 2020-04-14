@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserManagementService : IService<User>, IEntityManagementService<User>
+    public class UserManagementService : IEntityManagementService<User>
     {
         private readonly IRepository<UserDTO> repoUser;
 

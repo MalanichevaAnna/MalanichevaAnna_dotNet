@@ -21,7 +21,7 @@ namespace TouristConsole
                 .AddTransient(typeof(IRepository<>), typeof(Repository<>))
                 .Scan(scan => scan
                     .FromAssemblies(bl, pl)
-                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Service")))
+                    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("IEntityManagementService")))
                     .AddClasses(classes => classes.Where(type => type.Name.StartsWith("Presentation")))
                     .AsSelf()
                     .WithTransientLifetime())
