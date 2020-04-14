@@ -109,11 +109,7 @@ namespace BLL.Services
                 var service = repoService.Get(idService);
                 var hotel = repoHotel.Get(idHotel);
                 var user = repoUser.Get(idUser);
-                if(staff == null || service == null || hotel == null)
-                {
-                    return true;
-                }
-                return false;
+                return (staff == null || service == null || hotel == null);
             }
             catch
             {
