@@ -15,7 +15,7 @@ namespace DA
 
         public DbSet<StaffDTO> Staffs { get; set; }
 
-        public Context()
+        public Context(DbContextOptions<Context> options) : base(options)
         {
             Database.EnsureCreated();
         }

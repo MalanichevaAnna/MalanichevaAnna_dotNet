@@ -134,7 +134,7 @@ namespace BLL.Services
                     throw new ArgumentException("Check id");
                 }
 
-                await repoTravelVoucher.Update(_mapper.Map<DA.Data.TravelVoucherDTO>(item));
+                await repoTravelVoucher.Update(_mapper.Map<TravelVoucherDTO>(item));
             }
         }
         public async Task Delete(int id)
@@ -146,7 +146,7 @@ namespace BLL.Services
             }
             else
             {
-                await repoTravelVoucher.Delete(_mapper.Map<DA.Data.TravelVoucherDTO>(item[0]).Id);
+                await repoTravelVoucher.Delete(_mapper.Map<TravelVoucherDTO>(item[0]).Id);
             }
         }
     }

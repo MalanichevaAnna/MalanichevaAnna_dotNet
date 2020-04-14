@@ -10,11 +10,11 @@ namespace DA.Services.Repository
     public class Repository<T> : IRepository<T>
         where T : class, IEntityBase
     {
-        public Context Context { get; set; }
+        private readonly Context Context;
         
-        public Repository()
+        public Repository(Context context)
         {
-            Context = new Context();
+            Context = context;
         }
 
         public async Task<IEnumerable<T>> GetAll()
