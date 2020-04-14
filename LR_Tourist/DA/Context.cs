@@ -9,7 +9,7 @@ namespace DA
 
         public DbSet<HotelDTO> Hotels { get; set; }
 
-        public DbSet<Data.ServiceDTO> Services { get; set; }
+        public DbSet<ServiceDTO> Services { get; set; }
 
         public DbSet<UserDTO> Users { get; set; }
 
@@ -17,7 +17,7 @@ namespace DA
 
         public Context()
         {
-            Database.EnsureCreated();
+           // Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

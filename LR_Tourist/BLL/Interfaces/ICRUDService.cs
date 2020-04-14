@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using BLL.Model;
+using System.Threading.Tasks;
 
 namespace BLL.Interfaces
 {
     public interface ICRUDService<T>
-        where T : class
+        where T : class, IEntityBase
     {
         Task Create(T item);
 

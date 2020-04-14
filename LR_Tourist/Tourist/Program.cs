@@ -1,5 +1,4 @@
-﻿using DI;
-using System;
+﻿using System;
 using TouristConsole;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;

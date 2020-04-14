@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class UserService : IService<Model.User>, ICRUDService<Model.User>
+    public class UserService : IService<User>, ICRUDService<User>
     {
-        private readonly IRepository<DA.Data.UserDTO> repoUser;
+        private readonly IRepository<UserDTO> repoUser;
 
         private readonly IMapper _mapper;
 
-        public UserService(IRepository<DA.Data.UserDTO> repositoryUser, IMapper mapper)
+        public UserService(IRepository<UserDTO> repositoryUser, IMapper mapper)
         {
             repoUser = repositoryUser;
             _mapper = mapper;
         }
       
-        public async Task<Model.User> GetItem(int id)
+        public async Task<User> GetItem(int id)
         {
             var user = await repoUser.Get(id);
             if (user == null)

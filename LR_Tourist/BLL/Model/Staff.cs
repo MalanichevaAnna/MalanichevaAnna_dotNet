@@ -3,7 +3,7 @@ namespace BLL.Model
 {
     public class Staff : IPerson, IEntityBase
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
 

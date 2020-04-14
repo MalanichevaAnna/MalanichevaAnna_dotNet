@@ -5,7 +5,7 @@ namespace DA.Data
     {
         public int Id { get; }
 
-        public string Name { get; set; }
+        public string NameHotel { get; set; }
 
         public int Star { get; set; }
 

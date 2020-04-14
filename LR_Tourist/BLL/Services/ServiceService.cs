@@ -43,7 +43,6 @@ namespace BLL.Services
 
         public async Task Create(Service item)
         {
-
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));

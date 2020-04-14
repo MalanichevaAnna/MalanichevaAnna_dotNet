@@ -1,11 +1,11 @@
 ﻿
 namespace BLL.Model
 {
-    public class Hotel: DA.Data.IEntityBase
+    public class Hotel: IEntityBase
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string NameHotel { get; set; }
 
         public int Star { get; set; }
 
@@ -13,7 +13,7 @@ namespace BLL.Model
 
         public override string ToString()
         {
-            return $"{Id} {Name} {Star} {Phone}";
+            return $"{Id} {NameHotel} {Star} {Phone}";
         }
 
     }
