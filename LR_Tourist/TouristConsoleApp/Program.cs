@@ -27,6 +27,10 @@ namespace Tourist
             {
                 logger.Error(ex, ex.Message);
             }
+            finally
+            {
+                LogManager.Shutdown();
+            }
         }
     }
 }
