@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DA", "DA\DA.csproj", "{C90C28AC-A352-4559-9A47-E1755B61A684}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristConsoleApp", "Tourist\TouristConsoleApp.csproj", "{D43A8839-F874-4985-B93C-B20F218A94BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TouristConsoleApp", "TouristConsoleApp\TouristConsoleApp.csproj", "{D43A8839-F874-4985-B93C-B20F218A94BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
