@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BLL.Model.Hotel>
+﻿@model IEnumerable<BLL.Model.Service>
 
 <!DOCTYPE html>
 
@@ -17,12 +17,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Star)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,12 +25,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Star)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

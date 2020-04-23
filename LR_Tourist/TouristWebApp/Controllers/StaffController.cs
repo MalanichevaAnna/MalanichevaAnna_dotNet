@@ -4,43 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
-using DA;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SQLitePCL;
 
 namespace TouristWebApp.Controllers
 {
-    public class UserController : Controller
+    public class StaffController : Controller
     {
-        private readonly UserManagementService _userManagementService;
+        private readonly StaffManagementService _staffManagementService;
 
-        public UserController(UserManagementService userManagementService)
+        public StaffController(StaffManagementService staffManagementService)
         {
-            _userManagementService = userManagementService;
+            _staffManagementService = staffManagementService;
         }
 
-
-        // GET: User
+        // GET: Staff
         public async Task<IActionResult> Index()
         {
-            return View(await _userManagementService.GetItems());
+            return View(await _staffManagementService.GetItems());
         }
 
-        // GET: User/Details/5
-        public ActionResult Details(int id)
+        // GET: Staff/Details/5
+        public  ActionResult Details(int id)
         {
-            //await _userManagementService.GetItem(id);
             return View();
         }
 
-        // GET: User/Create
+        // GET: Staff/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Staff/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormCollection collection)
@@ -48,16 +44,17 @@ namespace TouristWebApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                var user = new User
+                var staff = new Staff
                 {
-                    Address = collection["Address"],
                     FirstName = collection["FirstName"],
                     LastName = collection["LastName"],
                     MiddleName = collection["MiddleName"],
+                    PersonalNumber = collection["PersonalNumber"],
                     Phone = collection["Phone"],
+                    Role = collection["Role"],
+                    Salary = Convert.ToInt32(collection["Salary"]),
                 };
-
-                await _userManagementService.Create(user);
+                await _staffManagementService.Create(staff);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -66,13 +63,14 @@ namespace TouristWebApp.Controllers
             }
         }
 
-        // GET: User/Edit/5
+        // GET: Staff/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            return View(await _userManagementService.GetItem(id));
+            await _staffManagementService.GetItem(id);
+            return View();
         }
 
-        // POST: User/Edit/5
+        // POST: Staff/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, IFormCollection collection)
@@ -80,17 +78,18 @@ namespace TouristWebApp.Controllers
             try
             {
                 // TODO: Add update logic here
-                var user = new User
+                var staff = new Staff
                 {
                     Id = id,
-                    Address = collection["Address"],
                     FirstName = collection["FirstName"],
                     LastName = collection["LastName"],
                     MiddleName = collection["MiddleName"],
+                    PersonalNumber = collection["PersonalNumber"],
                     Phone = collection["Phone"],
+                    Role = collection["Role"],
+                    Salary = Convert.ToInt32(collection["Salary"]),
                 };
-
-                await _userManagementService.Update(user);
+                await _staffManagementService.Update(staff);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -99,13 +98,14 @@ namespace TouristWebApp.Controllers
             }
         }
 
-        // GET: User/Delete/5
+        // GET: Staff/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            return View(await _userManagementService.GetItem(id));
+            await _staffManagementService.GetItem(id);
+            return View();
         }
 
-        // POST: User/Delete/5
+        // POST: Staff/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
@@ -113,7 +113,7 @@ namespace TouristWebApp.Controllers
             try
             {
                 // TODO: Add delete logic here
-                await _userManagementService.Delete(id);
+                await _staffManagementService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

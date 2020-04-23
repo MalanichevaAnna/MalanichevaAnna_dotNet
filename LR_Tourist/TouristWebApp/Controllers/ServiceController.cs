@@ -4,38 +4,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
-using DA;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TouristWebApp.Controllers
 {
-    public class HotelController : Controller
+    public class ServiceController : Controller
     {
-        private readonly HotelManagementService _hotelManagementService;
-        public HotelController(HotelManagementService hotelManagementService)
+        private readonly ServiceManagementService _serviceManagementService;
+
+        public ServiceController(ServiceManagementService serviceManagementService)
         {
-            _hotelManagementService = hotelManagementService;
-        }
-        // GET: Hotel
-        public async Task<IActionResult> Index()
-        {
-            return View(await _hotelManagementService.GetItems());
+            _serviceManagementService = serviceManagementService;
         }
 
-        // GET: Hotel/Details/5
+        // GET: Service
+        public async Task<IActionResult> Index()
+        {
+            return View(await _serviceManagementService.GetItems());
+        }
+
+        // GET: Service/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Hotel/Create
+        // GET: Service/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Hotel/Create
+        // POST: Service/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(IFormCollection collection)
@@ -43,13 +44,11 @@ namespace TouristWebApp.Controllers
             try
             {
                 // TODO: Add insert logic here
-                var hotel = new Hotel
+                var service = new Service
                 {
                     Name = collection["Name"],
-                    Phone = collection["Phone"],
-                    Star = Convert.ToInt32(collection["Star"]),
                 };
-                await _hotelManagementService.Create(hotel);
+                await _serviceManagementService.Create(service);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -58,14 +57,14 @@ namespace TouristWebApp.Controllers
             }
         }
 
-        // GET: Hotel/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        // GET: Service/Edit/5
+        public async Task<ActionResult> Edit(int id)
         {
-            await _hotelManagementService.GetItem(id);
+            await _serviceManagementService.GetItem(id);
             return View();
         }
 
-        // POST: Hotel/Edit/5
+        // POST: Service/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, IFormCollection collection)
@@ -73,14 +72,11 @@ namespace TouristWebApp.Controllers
             try
             {
                 // TODO: Add update logic here
-                var hotel = new Hotel
-                {   
-                    Id = id,
+                var service = new Service
+                {   Id = id,
                     Name = collection["Name"],
-                    Phone = collection["Phone"],
-                    Star = Convert.ToInt32(collection["Star"]),
                 };
-                await _hotelManagementService.Update(hotel);
+                await _serviceManagementService.Update(service);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -89,22 +85,22 @@ namespace TouristWebApp.Controllers
             }
         }
 
-        // GET: Hotel/Delete/5
+        // GET: Service/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            await _hotelManagementService.GetItem(id);
+            await _serviceManagementService.GetItem(id);
             return View();
         }
 
-        // POST: Hotel/Delete/5
+        // POST: Service/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                await _hotelManagementService.Delete(id);
+                await _serviceManagementService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
