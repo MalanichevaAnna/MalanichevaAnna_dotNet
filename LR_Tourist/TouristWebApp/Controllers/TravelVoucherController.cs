@@ -24,8 +24,8 @@ namespace TouristWebApp.Controllers
         // GET: TravelVoucher
         public async Task<IActionResult> Index()
         {
-            await _travelVoucherManagementService.GetItems();
-            return View();
+           
+            return View(await _travelVoucherManagementService.GetItems());
         }
 
         // GET: TravelVoucher/Details/5
