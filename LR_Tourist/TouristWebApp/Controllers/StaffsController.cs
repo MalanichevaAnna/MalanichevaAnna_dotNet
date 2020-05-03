@@ -6,15 +6,19 @@ using BLL.Model;
 using BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TouristWebApp.Controllers
 {
-    public class StaffController : Controller
+    public class StaffsController : Controller
     {
         private readonly StaffManagementService _staffManagementService;
 
-        public StaffController(StaffManagementService staffManagementService)
+        private readonly ILogger<StaffsController> _logger;
+
+        public StaffsController(ILogger<StaffsController> logger,StaffManagementService staffManagementService)
         {
+            _logger = logger;
             _staffManagementService = staffManagementService;
         }
 
@@ -22,12 +26,6 @@ namespace TouristWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _staffManagementService.GetItems());
-        }
-
-        // GET: Staff/Details/5
-        public  ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Staff/Create
@@ -59,6 +57,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("User creation is not possible");
                 return View();
             }
         }
@@ -94,6 +93,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("User edition is not possible");
                 return View();
             }
         }
@@ -108,7 +108,7 @@ namespace TouristWebApp.Controllers
         // POST: Staff/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteById(int id)
         {
             try
             {
@@ -118,6 +118,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("deleting a user with id data is not possible");
                 return View();
             }
         }

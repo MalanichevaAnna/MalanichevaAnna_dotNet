@@ -6,15 +6,19 @@ using BLL.Model;
 using BLL.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TouristWebApp.Controllers
 {
-    public class ServiceController : Controller
+    public class ServicesController : Controller
     {
         private readonly ServiceManagementService _serviceManagementService;
 
-        public ServiceController(ServiceManagementService serviceManagementService)
+        private readonly ILogger<ServicesController> _logger;
+
+        public ServicesController(ILogger<ServicesController> logger,ServiceManagementService serviceManagementService)
         {
+            _logger = logger;
             _serviceManagementService = serviceManagementService;
         }
 
@@ -22,12 +26,6 @@ namespace TouristWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _serviceManagementService.GetItems());
-        }
-
-        // GET: Service/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Service/Create
@@ -53,6 +51,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogDebug("User creation is not possible");
                 return View();
             }
         }
@@ -81,6 +80,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogDebug("User edition is not possible");
                 return View();
             }
         }
@@ -95,7 +95,7 @@ namespace TouristWebApp.Controllers
         // POST: Service/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> DeleteById(int id)
         {
             try
             {
@@ -105,6 +105,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogDebug("deleting a user with id data is not possible");
                 return View();
             }
         }

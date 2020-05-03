@@ -7,15 +7,19 @@ using BLL.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TouristWebApp.Controllers
 {
-    public class TravelVoucherController : Controller
+    public class TravelVouchersController : Controller
     {
         private readonly TravelVoucherManagementService _travelVoucherManagementService;
 
-        public TravelVoucherController(TravelVoucherManagementService travelVoucherManagementService)
+        private readonly ILogger<TravelVouchersController> _logger;
+
+        public TravelVouchersController(ILogger<TravelVouchersController> logger,TravelVoucherManagementService travelVoucherManagementService)
         {
+            _logger = logger;
             _travelVoucherManagementService = travelVoucherManagementService;
         }
 
@@ -26,12 +30,6 @@ namespace TouristWebApp.Controllers
         {
            
             return View(await _travelVoucherManagementService.GetItems());
-        }
-
-        // GET: TravelVoucher/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: TravelVoucher/Create
@@ -64,6 +62,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("User creation is not possible");
                 return View();
             }
         }
@@ -100,6 +99,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("User edition is not possible");
                 return View();
             }
         }
@@ -114,7 +114,7 @@ namespace TouristWebApp.Controllers
         // POST: TravelVoucher/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteById(int id)
         {
             try
             {
@@ -124,6 +124,7 @@ namespace TouristWebApp.Controllers
             }
             catch
             {
+                _logger.LogInformation("deleting a user with id data is not possible");
                 return View();
             }
         }
