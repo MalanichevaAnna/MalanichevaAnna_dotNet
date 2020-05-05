@@ -41,17 +41,17 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 var service = new Service
                 {
                     Name = collection["Name"],
                 };
                 await _serviceManagementService.Create(service);
+                _logger.LogInformation("Creation was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogDebug("User creation is not possible");
+                _logger.LogError("User creation is not possible");
                 return View();
             }
         }
@@ -70,17 +70,17 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 var service = new Service
                 {   Id = id,
                     Name = collection["Name"],
                 };
                 await _serviceManagementService.Update(service);
+                _logger.LogInformation("Edition was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogDebug("User edition is not possible");
+                _logger.LogError("User edition is not possible");
                 return View();
             }
         }
@@ -99,13 +99,13 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 await _serviceManagementService.Delete(id);
+                _logger.LogInformation("Deletion was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogDebug("deleting a user with id data is not possible");
+                _logger.LogError("deleting a user with id data is not possible");
                 return View();
             }
         }

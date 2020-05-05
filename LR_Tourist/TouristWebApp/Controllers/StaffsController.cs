@@ -41,7 +41,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 var staff = new Staff
                 {
                     FirstName = collection["FirstName"],
@@ -53,11 +52,12 @@ namespace TouristWebApp.Controllers
                     Salary = Convert.ToInt32(collection["Salary"]),
                 };
                 await _staffManagementService.Create(staff);
+                _logger.LogInformation("Creation was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("User creation is not possible");
+                _logger.LogError("User creation is not possible");
                 return View();
             }
         }
@@ -76,7 +76,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 var staff = new Staff
                 {
                     Id = id,
@@ -89,11 +88,12 @@ namespace TouristWebApp.Controllers
                     Salary = Convert.ToInt32(collection["Salary"]),
                 };
                 await _staffManagementService.Update(staff);
+                _logger.LogInformation("Edition was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("User edition is not possible");
+                _logger.LogError("User edition is not possible");
                 return View();
             }
         }
@@ -112,13 +112,13 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 await _staffManagementService.Delete(id);
+                _logger.LogInformation("Deletion was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("deleting a user with id data is not possible");
+                _logger.LogError("deleting a user with id data is not possible");
                 return View();
             }
         }

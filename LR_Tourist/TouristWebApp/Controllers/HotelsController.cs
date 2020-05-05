@@ -40,7 +40,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 var hotel = new Hotel
                 {
                     Name = collection["Name"],
@@ -48,11 +47,12 @@ namespace TouristWebApp.Controllers
                     Star = Convert.ToInt32(collection["Star"]),
                 };
                 await _hotelManagementService.Create(hotel);
+                _logger.LogInformation("Creation was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogDebug("User creation is not possible");
+                _logger.LogError("User creation is not possible");
                 return View();
             }
         }
@@ -71,7 +71,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 var hotel = new Hotel
                 {   
                     Id = id,
@@ -80,15 +79,16 @@ namespace TouristWebApp.Controllers
                     Star = Convert.ToInt32(collection["Star"]),
                 };
                 await _hotelManagementService.Update(hotel);
+                _logger.LogInformation("Edition was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                throw new ArgumentException("User edition is not possible");
+                _logger.LogError("User edition is not possible");
+                return View();
             }
         }
 
-        // GET: Hotel/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             await _hotelManagementService.GetItem(id);
@@ -102,13 +102,13 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 await _hotelManagementService.Delete(id);
+                _logger.LogInformation("Deletion was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogDebug("deleting a user with id data is not possible");
+                _logger.LogError("deleting a user with id data is not possible");
                 return View();
             }
         }

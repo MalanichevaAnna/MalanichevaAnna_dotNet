@@ -45,7 +45,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
                 var travelVoucher = new TravelVoucher
                 {
                     Departure = Convert.ToDateTime(collection["Departure"]),
@@ -58,11 +57,12 @@ namespace TouristWebApp.Controllers
                     UserId = Convert.ToInt32(collection["UserId"]),
                 };
                 await _travelVoucherManagementService.Create(travelVoucher);
+                _logger.LogInformation("Creation was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("User creation is not possible");
+                _logger.LogError("User creation is not possible");
                 return View();
             }
         }
@@ -81,7 +81,6 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add update logic here
                 var travelVoucher = new TravelVoucher
                 {
                     Id = id,
@@ -95,11 +94,12 @@ namespace TouristWebApp.Controllers
                     UserId = Convert.ToInt32(collection["UserId"]),
                 };
                 await _travelVoucherManagementService.Update(travelVoucher);
+                _logger.LogInformation("Edition was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("User edition is not possible");
+                _logger.LogError("User edition is not possible");
                 return View();
             }
         }
@@ -118,13 +118,13 @@ namespace TouristWebApp.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
                 await _travelVoucherManagementService.Delete(id);
+                _logger.LogInformation("Deletion was successful");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                _logger.LogInformation("deleting a user with id data is not possible");
+                _logger.LogError("deleting a user with id data is not possible");
                 return View();
             }
         }
