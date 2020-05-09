@@ -76,7 +76,7 @@ namespace TouristWebApp.Controllers
                     Star = Convert.ToInt32(collection["Star"]),
                 };
                 await _hotelManagementService.Update(hotel);
-                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}");
+                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _hotelManagementService.Delete(id);
-                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}");
+                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

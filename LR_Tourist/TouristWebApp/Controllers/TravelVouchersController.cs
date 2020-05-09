@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,8 +19,6 @@ namespace TouristWebApp.Controllers
             _logger = logger;
             _travelVoucherManagementService = travelVoucherManagementService;
         }
-
-
 
         // GET: TravelVoucher
         public async Task<IActionResult> Index()
@@ -57,12 +52,12 @@ namespace TouristWebApp.Controllers
                     UserId = Convert.ToInt32(collection["UserId"]),
                 };
                 await _travelVoucherManagementService.Create(travelVoucher);
-                _logger.LogInformation("Creation was successful");
+                _logger.LogInformation($"The {nameof(TravelVoucher)} creation was successful.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User creation is not possible");
+                _logger.LogError($"The {nameof(TravelVoucher)} creation failed.", ex);
                 return View();
             }
         }
@@ -94,12 +89,12 @@ namespace TouristWebApp.Controllers
                     UserId = Convert.ToInt32(collection["UserId"]),
                 };
                 await _travelVoucherManagementService.Update(travelVoucher);
-                _logger.LogInformation("Edition was successful");
+                _logger.LogInformation($"The {nameof(TravelVoucher)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User edition is not possible");
+                _logger.LogError($"The {nameof(TravelVoucher)} editing failed.", ex);
                 return View();
             }
         }
@@ -119,12 +114,12 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _travelVoucherManagementService.Delete(id);
-                _logger.LogInformation("Deletion was successful");
+                _logger.LogInformation($"The {nameof(TravelVoucher)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("deleting a user with id data is not possible");
+                _logger.LogError($"The {nameof(TravelVoucher)} deleting failed.", ex);
                 return View();
             }
         }

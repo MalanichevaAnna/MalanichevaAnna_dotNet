@@ -73,7 +73,7 @@ namespace TouristWebApp.Controllers
                     Name = collection["Name"],
                 };
                 await _serviceManagementService.Update(service);
-                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}");
+                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -98,7 +98,7 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _serviceManagementService.Delete(id);
-                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}");
+                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

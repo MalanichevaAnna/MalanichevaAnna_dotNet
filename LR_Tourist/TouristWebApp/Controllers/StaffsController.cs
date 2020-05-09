@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
@@ -52,12 +50,12 @@ namespace TouristWebApp.Controllers
                     Salary = Convert.ToInt32(collection["Salary"]),
                 };
                 await _staffManagementService.Create(staff);
-                _logger.LogInformation("Creation was successful");
+                _logger.LogInformation($"The {nameof(Staff)} creation was successful.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User creation is not possible");
+                _logger.LogError($"The {nameof(Staff)} creation failed.", ex);
                 return View();
             }
         }
@@ -88,12 +86,12 @@ namespace TouristWebApp.Controllers
                     Salary = Convert.ToInt32(collection["Salary"]),
                 };
                 await _staffManagementService.Update(staff);
-                _logger.LogInformation("Edition was successful");
+                _logger.LogInformation($"The {nameof(Staff)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User edition is not possible");
+                _logger.LogError($"The {nameof(Staff)} editing failed.", ex);
                 return View();
             }
         }
@@ -113,12 +111,12 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _staffManagementService.Delete(id);
-                _logger.LogInformation("Deletion was successful");
+                _logger.LogInformation($"The {nameof(Staff)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("deleting a user with id data is not possible");
+                _logger.LogError($"The {nameof(Staff)} deleting failed.", ex);
                 return View();
             }
         }
