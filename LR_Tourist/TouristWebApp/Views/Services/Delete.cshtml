@@ -6,12 +6,12 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            <label asp-for="Name"></label>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+        <dd class = " col-sm-10">
+                @Model.Name
+                </dd>
+</dl>
     
     <form asp-action="DeleteById">
         <input type="hidden" asp-for="Id" />
