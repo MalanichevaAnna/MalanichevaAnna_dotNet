@@ -34,12 +34,14 @@ namespace TouristWebApp
                 options.UseSqlServer(Configuration.GetConnectionString("TouristWebAppContextConnection")));
 
             //добавление сервисов Idenity
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                        .AddEntityFrameworkStores<TouristWebAppContext>();
-
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true);
+            // .AddEntityFrameworkStores<TouristWebAppContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddEntityFrameworkStores<TouristWebAppContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            
             var bl = Assembly.Load("BLL");
 
             services
