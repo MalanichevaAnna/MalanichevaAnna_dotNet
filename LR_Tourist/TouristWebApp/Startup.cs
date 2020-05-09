@@ -5,10 +5,12 @@ using DA;
 using DA.Services.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TouristWebApp.Data;
 
 namespace TouristWebApp
 {
@@ -27,6 +29,17 @@ namespace TouristWebApp
             var connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Context>(options => options.UseSqlServer(connection));
             services.AddControllersWithViews();
+
+            // добавление TouristWebAppContext для взаимодействия с базой данных учетных записей
+            services.AddDbContext<TouristWebAppContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("TouristWebAppContextConnection")));
+
+            //добавление сервисов Idenity
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                        .AddEntityFrameworkStores<TouristWebAppContext>();
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
             var bl = Assembly.Load("BLL");
 
@@ -60,13 +73,15 @@ namespace TouristWebApp
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            app.UseAuthentication();
+    app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
