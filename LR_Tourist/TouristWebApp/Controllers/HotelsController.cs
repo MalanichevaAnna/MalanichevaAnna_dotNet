@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
-using DA;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -47,12 +44,12 @@ namespace TouristWebApp.Controllers
                     Star = Convert.ToInt32(collection["Star"]),
                 };
                 await _hotelManagementService.Create(hotel);
-                _logger.LogInformation("Creation was successful");
+                _logger.LogInformation($"The {nameof(Hotel)} creation was successful.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User creation is not possible");
+                _logger.LogError($"The {nameof(Hotel)} creation failed.", ex);
                 return View();
             }
         }
@@ -72,19 +69,19 @@ namespace TouristWebApp.Controllers
             try
             {
                 var hotel = new Hotel
-                {   
+                {
                     Id = id,
                     Name = collection["Name"],
                     Phone = collection["Phone"],
                     Star = Convert.ToInt32(collection["Star"]),
                 };
                 await _hotelManagementService.Update(hotel);
-                _logger.LogInformation("Edition was successful");
+                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User edition is not possible");
+                _logger.LogError($"The {nameof(Hotel)} editing failed.", ex);
                 return View();
             }
         }
@@ -103,12 +100,12 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _hotelManagementService.Delete(id);
-                _logger.LogInformation("Deletion was successful");
+                _logger.LogInformation($"The {nameof(Hotel)} editing was successful. Id = {id}");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("deleting a user with id data is not possible");
+                _logger.LogError($"The {nameof(Hotel)} deleting failed.", ex);
                 return View();
             }
         }
