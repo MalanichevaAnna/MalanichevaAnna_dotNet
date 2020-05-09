@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
@@ -46,12 +44,12 @@ namespace TouristWebApp.Controllers
                     Name = collection["Name"],
                 };
                 await _serviceManagementService.Create(service);
-                _logger.LogInformation("Creation was successful");
+                _logger.LogInformation($"The {nameof(Service)} creation was successful.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User creation is not possible");
+                _logger.LogError($"The {nameof(Service)} creation failed.", ex);
                 return View();
             }
         }
@@ -75,12 +73,12 @@ namespace TouristWebApp.Controllers
                     Name = collection["Name"],
                 };
                 await _serviceManagementService.Update(service);
-                _logger.LogInformation("Edition was successful");
+                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("User edition is not possible");
+                _logger.LogError($"The {nameof(Service)} editing failed.", ex);
                 return View();
             }
         }
@@ -100,12 +98,12 @@ namespace TouristWebApp.Controllers
             try
             {
                 await _serviceManagementService.Delete(id);
-                _logger.LogInformation("Deletion was successful");
+                _logger.LogInformation($"The {nameof(Service)} editing was successful. Id = {id}.");
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                _logger.LogError("deleting a user with id data is not possible");
+                _logger.LogError($"The {nameof(Service)} deleting failed.", ex);
                 return View();
             }
         }
