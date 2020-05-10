@@ -117,7 +117,7 @@ namespace BLL.Services
             }
         }
 
-        public async Task Update(Model.TravelVoucher item)
+        public async Task Update(TravelVoucher item)
         {
             if (item == null)
             {

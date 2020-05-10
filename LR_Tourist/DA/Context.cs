@@ -1,5 +1,6 @@
 ﻿using DA.Data;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DA
 {
@@ -17,7 +18,10 @@ namespace DA
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
-            Database.EnsureCreated();
+            if (!Database.CanConnect() && !Database.EnsureCreated())
+            {
+                throw new InvalidOperationException("Database was not created properly.");
+            }
         }
     }
 }
