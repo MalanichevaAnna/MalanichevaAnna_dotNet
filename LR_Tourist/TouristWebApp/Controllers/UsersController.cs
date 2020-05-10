@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -22,6 +23,7 @@ namespace TouristWebApp.Controllers
 
 
         // GET: User
+       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _userManagementService.GetItems());

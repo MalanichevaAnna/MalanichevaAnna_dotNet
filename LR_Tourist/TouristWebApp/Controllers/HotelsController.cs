@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,10 +21,12 @@ namespace TouristWebApp.Controllers
             _hotelManagementService = hotelManagementService;
         }
         // GET: Hotel
+        //[Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _hotelManagementService.GetItems());
         }
+       // [Authorize(Roles = "admin")]
         // GET: Hotel/Create
         public ActionResult Create()
         {
@@ -55,6 +58,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: Hotel/Edit/5
+       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             await _hotelManagementService.GetItem(id);
@@ -86,6 +90,7 @@ namespace TouristWebApp.Controllers
             }
         }
 
+       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _hotelManagementService.GetItem(id);
