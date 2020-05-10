@@ -23,13 +23,13 @@ namespace TouristWebApp.Controllers
 
 
         // GET: User
-       // [Authorize(Roles = "admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _userManagementService.GetItems());
         }
 
         // GET: User/Create
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +63,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: User/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             return View(await _userManagementService.GetItem(id));
@@ -71,6 +72,7 @@ namespace TouristWebApp.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id, IFormCollection collection)
         {
             try
@@ -97,6 +99,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: User/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             return View(await _userManagementService.GetItem(id));
@@ -105,6 +108,7 @@ namespace TouristWebApp.Controllers
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteById(int id)
         {
             try
