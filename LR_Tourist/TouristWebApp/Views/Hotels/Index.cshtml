@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<BLL.Model.Hotel>
-
+@using Microsoft.AspNetCore.Identity
+@using TouristWebApp
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -19,7 +22,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -30,11 +34,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            }
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BLL.Model.User>
 @using Microsoft.AspNetCore.Identity
+@using TouristWebApp
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 <!DOCTYPE html>
@@ -53,7 +54,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Address)
                     </td>
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
