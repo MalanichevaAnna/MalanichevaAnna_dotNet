@@ -18,19 +18,19 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.FirstName)
+                    <label asp-for="First().FirstName"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.LastName)
+                    <label asp-for="First().LastName"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MiddleName)
+                    <label asp-for="First().MiddleName"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Phone)
+                    <label asp-for="First().Phone"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Address)
+                    <label asp-for="First().Address"></label>
                 </th>
                 <th></th>
             </tr>
@@ -40,19 +40,19 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
+                        @Model.First().FirstName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
+                        @Model.First().LastName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MiddleName)
+                        @Model.First().MiddleName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
+                        @Model.First().Phone
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Address)
+                        @Model.First().Address
                     </td>
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
                     {

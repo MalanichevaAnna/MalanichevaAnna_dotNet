@@ -28,7 +28,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Name)
+                        @Model.First().Name
                     </td>
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
                     {

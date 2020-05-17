@@ -21,22 +21,22 @@
                     @Html.DisplayNameFor(model => model.FirstName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.LastName)
+                    <label asp-for="First().LastName"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.MiddleName)
+                    <label asp-for="First().MiddleName"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Role)
+                    <label asp-for="First().Role"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Phone)
+                    <label asp-for="First().Phone"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PersonalNumber)
+                    <label asp-for="First().PersonalNumber"></label>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Salary)
+                    <label asp-for="First().Salary"></label>
                 </th>
                 <th></th>
             </tr>
@@ -46,25 +46,25 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
+                        @Model.First().FirstName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.LastName)
+                        @Model.First().LastName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MiddleName)
+                        @Model.First().MiddleName
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Role)
+                        @Model.First().Role
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
+                        @Model.First().Phone
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PersonalNumber)
+                        @Model.First().PersonalNumber
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Salary)
+                        @Model.First().Salary
                     </td>
                     @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
                     {

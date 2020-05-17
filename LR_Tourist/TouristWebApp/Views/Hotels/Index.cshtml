@@ -10,13 +10,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <label asp-for="First().Name"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Star)
+                <label asp-for="First().Star"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                <label asp-for="First().Phone"></label>
             </th>
             <th></th>
         </tr>
@@ -24,15 +24,15 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
+<tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Model.First().Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Star)
+                @Model.First().Star
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
+                @Model.First().Phone
             </td>
             @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
             {
