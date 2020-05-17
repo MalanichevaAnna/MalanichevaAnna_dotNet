@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TouristWebApp
 {
-    public class RoleInitializer
+    public class IdentityInitializer
     {
         public static async Task InitializeAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {

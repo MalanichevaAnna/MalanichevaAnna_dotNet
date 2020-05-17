@@ -1,10 +1,12 @@
 ﻿using DA.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace DA
 {
-    public class Context : DbContext
+    public class Context : IdentityDbContext<IdentityUser>
     {
         public DbSet<TravelVoucherDTO> TravelVouchers { get; set; }
 
