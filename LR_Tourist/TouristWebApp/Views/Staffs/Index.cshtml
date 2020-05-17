@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<BLL.Model.Staff>
 @using Microsoft.AspNetCore.Identity
+
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 <!DOCTYPE html>
@@ -65,7 +66,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Salary)
                     </td>
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("admin"))
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
