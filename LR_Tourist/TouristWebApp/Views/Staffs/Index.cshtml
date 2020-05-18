@@ -1,74 +1,79 @@
 ﻿@model IEnumerable<BLL.Model.Staff>
-
-<!DOCTYPE html>
-
+@using Microsoft.AspNetCore.Identity
+@using TouristWebApp
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MiddleName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Role)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PersonalNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Salary)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MiddleName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonalNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    <label asp-for="First().LastName"></label>
+                </th>
+                <th>
+                    <label asp-for="First().MiddleName"></label>
+                </th>
+                <th>
+                    <label asp-for="First().Role"></label>
+                </th>
+                <th>
+                    <label asp-for="First().Phone"></label>
+                </th>
+                <th>
+                    <label asp-for="First().PersonalNumber"></label>
+                </th>
+                <th>
+                    <label asp-for="First().Salary"></label>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Model.First().FirstName
+                    </td>
+                    <td>
+                        @Model.First().LastName
+                    </td>
+                    <td>
+                        @Model.First().MiddleName
+                    </td>
+                    <td>
+                        @Model.First().Role
+                    </td>
+                    <td>
+                        @Model.First().Phone
+                    </td>
+                    <td>
+                        @Model.First().PersonalNumber
+                    </td>
+                    <td>
+                        @Model.First().Salary
+                    </td>
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(Constants.Admin))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>

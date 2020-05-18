@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,10 +21,12 @@ namespace TouristWebApp.Controllers
             _hotelManagementService = hotelManagementService;
         }
         // GET: Hotel
+
         public async Task<IActionResult> Index()
         {
             return View(await _hotelManagementService.GetItems());
         }
+        [Authorize(Roles = Constants.Admin)]
         // GET: Hotel/Create
         public ActionResult Create()
         {
@@ -33,6 +36,7 @@ namespace TouristWebApp.Controllers
         // POST: Hotel/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Create(IFormCollection collection)
         {
             try
@@ -55,6 +59,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: Hotel/Edit/5
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Edit(int id)
         {
             await _hotelManagementService.GetItem(id);
@@ -64,6 +69,7 @@ namespace TouristWebApp.Controllers
         // POST: Hotel/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Edit(int id, IFormCollection collection)
         {
             try
@@ -86,6 +92,7 @@ namespace TouristWebApp.Controllers
             }
         }
 
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             await _hotelManagementService.GetItem(id);
@@ -95,6 +102,7 @@ namespace TouristWebApp.Controllers
         // POST: Hotel/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> DeleteById(int id)
         {
             try
