@@ -14,7 +14,7 @@ namespace DA
 
         public DbSet<ServiceDTO> Services { get; set; }
 
-        public DbSet<UserDTO> AppUsersнет { get; set; }
+        public DbSet<UserDTO> AppUsers { get; set; }
 
         public DbSet<StaffDTO> Staffs { get; set; }
 
