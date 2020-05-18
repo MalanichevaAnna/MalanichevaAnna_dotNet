@@ -3,8 +3,6 @@
 @using TouristWebApp
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-<!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -54,7 +52,7 @@
                     <td>
                         @Model.First().Address
                     </td>
-                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(Const.Admin))
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole(Constants.Admin))
                     {
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

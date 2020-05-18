@@ -7,15 +7,15 @@ namespace TouristWebApp
     {
         public static async Task InitializeAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string adminEmail = "admin@gmail.com";
-            string password = "_Aa123456";
-            if (await roleManager.FindByNameAsync("admin") == null)
+            string adminEmail = Constants.AdminEmail;
+            string password = Constants.Password;
+            if (await roleManager.FindByNameAsync(Constants.Admin) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("admin"));
+                await roleManager.CreateAsync(new IdentityRole(Constants.Admin));
             }
-            if (await roleManager.FindByNameAsync("employee") == null)
+            if (await roleManager.FindByNameAsync(Constants.Employee) == null)
             {
-                await roleManager.CreateAsync(new IdentityRole("employee"));
+                await roleManager.CreateAsync(new IdentityRole(Constants.Employee));
             }
             if (await userManager.FindByNameAsync(adminEmail) == null)
             {
@@ -23,7 +23,7 @@ namespace TouristWebApp
                 IdentityResult result = await userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(admin, Constants.Admin);
                 }
             }
         }
