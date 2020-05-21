@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<BLL.Model.Hotel>
-
+@using Microsoft.AspNetCore.Identity
+@using TouristWebApp
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -7,34 +10,38 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <label asp-for="First().Name"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Star)
+                <label asp-for="First().Star"></label>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                <label asp-for="First().Phone"></label>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var item in Model)
+        {
+<tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Model.First().Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Star)
+                @Model.First().Star
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Phone)
+                @Model.First().Phone
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole(Constants.Admin))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            }
+            </tr>
+        }
     </tbody>
 </table>

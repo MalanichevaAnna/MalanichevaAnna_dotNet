@@ -29,7 +29,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: User/Create
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Constants.Admin)]
         public ActionResult Create()
         {
             return View();
@@ -63,7 +63,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: User/Edit/5
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Edit(int id)
         {
             return View(await _userManagementService.GetItem(id));
@@ -72,7 +72,7 @@ namespace TouristWebApp.Controllers
         // POST: User/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Edit(int id, IFormCollection collection)
         {
             try
@@ -99,7 +99,7 @@ namespace TouristWebApp.Controllers
         }
 
         // GET: User/Delete/5
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             return View(await _userManagementService.GetItem(id));
@@ -108,7 +108,7 @@ namespace TouristWebApp.Controllers
         // POST: User/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = Constants.Admin)]
         public async Task<IActionResult> DeleteById(int id)
         {
             try

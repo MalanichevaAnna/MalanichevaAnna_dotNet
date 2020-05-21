@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TouristWebApp.Data;
 
 namespace TouristWebApp
 {
@@ -28,13 +27,9 @@ namespace TouristWebApp
         {
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllersWithViews();
-
-            services.AddDbContext<TouristWebAppContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("TouristWebAppContextConnection")));
-
           
             services.AddIdentity<IdentityUser, IdentityRole>()
-               .AddEntityFrameworkStores<TouristWebAppContext>();
+               .AddEntityFrameworkStores<Context>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
@@ -66,7 +61,6 @@ namespace TouristWebApp
 
             app.UseStaticFiles();
             app.UseRouting();
-
             app.UseAuthentication();
     app.UseAuthorization();
 
