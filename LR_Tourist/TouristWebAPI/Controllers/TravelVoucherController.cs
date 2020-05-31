@@ -37,7 +37,7 @@ namespace TouristWebAPI.Controllers
             try
             {
                 var travelVoucher = await _travelVoucherManagementService.GetItem(id);
-                return Ok(travelVoucher)
+                return Ok(travelVoucher);
             }
             catch (Exception ex)
             {
