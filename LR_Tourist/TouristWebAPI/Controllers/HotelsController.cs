@@ -37,7 +37,7 @@ namespace TouristWebAPI.Controllers
             try
             {
                 var hotel = await _hotelManagementService.GetItem(id);
-                return new ObjectResult(hotel);
+                return Ok(hotel);
             }
             catch(Exception ex)
             {
