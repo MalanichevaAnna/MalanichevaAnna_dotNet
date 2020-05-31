@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +15,13 @@ namespace TouristWebAPI.Controllers
     public class ServiceController : Controller
     {
         private readonly ServiceManagementService _seviceManagementService;
+        private readonly ILogger<ServiceController> _logger;
 
-        public ServiceController(ServiceManagementService serviceManagementService)
+        public ServiceController(ServiceManagementService serviceManagementService,
+                                 ILogger<ServiceController> logger)
         {
             _seviceManagementService = serviceManagementService;
+            _logger = logger;
         }
         // GET: api/<controller>
         [HttpGet]
@@ -29,56 +34,65 @@ namespace TouristWebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Service>> Get(int id)
         {
-            var service = await _seviceManagementService.GetItem(id);
-            if (service == null)
+            try
             {
-                return NotFound();
+                var service = await _seviceManagementService.GetItem(id);
+                return Ok(service);
             }
-            return new ObjectResult(service);
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured during get service. Exception: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task<ActionResult<Service>> Post(Service service)
         {
-            if (service == null)
+            try
             {
+                await _seviceManagementService.Create(service);
+                return Ok(service);
+
+            }
+            catch(Exception Ex)
+            {
+                _logger.LogError($"Error occured during creating service. Exception: {ex.Message}");
                 return BadRequest();
             }
-
-            await _seviceManagementService.Create(service);
-            return Ok(service);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<Service>> Put(Service service)
         {
-            if (service == null)
+            try
             {
+                await _seviceManagementService.Update(service);
+                return Ok(service);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during editing service. Exception: {ex.Message}");
                 return BadRequest();
-            }
-            if (!_seviceManagementService.GetItems().Result.Any(x => x.Id == service.Id))
-            {
-                return NotFound();
-            }
-
-            await _seviceManagementService.Update(service);
-            return Ok(service);
+            } 
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Service>> Delete(int id)
         {
-            var service = await _seviceManagementService.GetItem(id);
-            if (service == null)
+            try
             {
-                return NotFound();
+                await _seviceManagementService.Delete(id);
+                return Ok();
             }
-            await _seviceManagementService.Delete(id);
-
-            return Ok(service);
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured during deleting service. Exception: {ex.Message}");
+                return BadRequest();
+            }
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +15,13 @@ namespace TouristWebAPI.Controllers
     public class TravelVoucherController : Controller
     {
         private readonly TravelVoucherManagementService _travelVoucherManagementService;
+        private readonly ILogger<TravelVoucherController> _logger;
 
-        public TravelVoucherController(TravelVoucherManagementService travelVoucherManagementService)
+        public TravelVoucherController(TravelVoucherManagementService travelVoucherManagementService,
+                                       ILogger<TravelVoucherController> logger)
         {
             _travelVoucherManagementService = travelVoucherManagementService;
+            _logger = logger;
         }
         // GET: api/<controller>
         [HttpGet]
@@ -28,58 +33,65 @@ namespace TouristWebAPI.Controllers
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TravelVoucher>> Get(int id)
-
         {
-            var staff = await _travelVoucherManagementService.GetItem(id);
-            if (staff == null)
+            try
             {
-                return NotFound();
+                var travelVoucher = await _travelVoucherManagementService.GetItem(id);
+                return Ok(travelVoucher)
             }
-            return new ObjectResult(staff);
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured during get travelVoucher. Exception: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task<ActionResult<TravelVoucher>> Post(TravelVoucher travelVoucher)
         {
-            if (travelVoucher == null)
+            try
             {
+                await _travelVoucherManagementService.Create(travelVoucher);
+                return Ok(travelVoucher);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during creating characteristic. Exception: {ex.Message}");
                 return BadRequest();
             }
-
-            await _travelVoucherManagementService.Create(travelVoucher);
-            return Ok(travelVoucher);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<TravelVoucher>> Put(TravelVoucher travelVoucher)
         {
-            if (travelVoucher == null)
+            try
             {
+                await _travelVoucherManagementService.Update(travelVoucher);
+                return Ok(travelVoucher);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured during editing travelVoucher. Exception: {ex.Message}");
                 return BadRequest();
             }
-            if (!_travelVoucherManagementService.GetItems().Result.Any(x => x.Id == travelVoucher.Id))
-            {
-                return NotFound();
-            }
-
-            await _travelVoucherManagementService.Update(travelVoucher);
-            return Ok(travelVoucher);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<TravelVoucher>> Delete(int id)
         {
-            var travelVoucher = await _travelVoucherManagementService.GetItem(id);
-            if (travelVoucher == null)
+            try
             {
-                return NotFound();
+                await _travelVoucherManagementService.Delete(id);
+                return Ok();
             }
-            await _travelVoucherManagementService.Delete(id);
-
-            return Ok(travelVoucher);
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during deleting travelVoucher. Exception: {ex.Message}");
+                return BadRequest();
+            }
         }
     }
 }

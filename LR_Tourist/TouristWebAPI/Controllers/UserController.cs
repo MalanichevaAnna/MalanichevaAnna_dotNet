@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BLL.Model;
 using BLL.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +15,13 @@ namespace TouristWebAPI.Controllers
     public class UserController : Controller
     {
         private readonly UserManagementService _userManagementService;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(UserManagementService userManagementService)
+        public UserController(UserManagementService userManagementService,
+                              ILogger<UserController> logger)
         {
             _userManagementService = userManagementService;
+            _logger = logger;
         }
         // GET: api/<controller>
         [HttpGet]
@@ -28,58 +33,66 @@ namespace TouristWebAPI.Controllers
         // GET api/<controller>/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(int id)
-
         {
-            var user = await _userManagementService.GetItem(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userManagementService.GetItem(id);
+                return Ok(user);
             }
-            return new ObjectResult(user);
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during get user. Exception: {ex.Message}");
+                return BadRequest();
+            }
         }
 
         // POST api/<controller>
         [HttpPost]
         public async Task<ActionResult<User>> Post(User user)
         {
-            if (user == null)
+            try
             {
+                await _userManagementService.Create(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error occured during creating user. Exception: {ex.Message}");
                 return BadRequest();
             }
-
-            await _userManagementService.Create(user);
-            return Ok(user);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<ActionResult<User>> Put(User user)
         {
-            if (user == null)
+            try
             {
+                await _userManagementService.Update(user);
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during editing user. Exception: {ex.Message}");
                 return BadRequest();
             }
-            if (!_userManagementService.GetItems().Result.Any(x => x.Id == user.Id))
-            {
-                return NotFound();
-            }
-
-            await _userManagementService.Update(user);
-            return Ok(user);
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> Delete(int id)
         {
-            var user = await _userManagementService.GetItem(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                await _userManagementService.Delete(id);
+                return Ok();
             }
-            await _userManagementService.Delete(id);
-
-            return Ok(user);
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error occured during deleting user. Exception: {ex.Message}");
+                return BadRequest();
+            }
+           
         }
     }
 }
