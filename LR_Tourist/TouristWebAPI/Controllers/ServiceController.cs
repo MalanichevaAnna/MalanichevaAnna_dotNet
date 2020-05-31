@@ -56,7 +56,7 @@ namespace TouristWebAPI.Controllers
                 return Ok(service);
 
             }
-            catch(Exception Ex)
+            catch(Exception ex)
             {
                 _logger.LogError($"Error occured during creating service. Exception: {ex.Message}");
                 return BadRequest();

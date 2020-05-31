@@ -58,7 +58,7 @@ namespace TouristWebAPI.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogError($"Error occured during creating staff. Exception: {exception.Message}");
+                _logger.LogError($"Error occured during creating staff. Exception: {ex.Message}");
                 return BadRequest();
             }
         }
