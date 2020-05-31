@@ -115,7 +115,7 @@ namespace TouristWebAPI
 
             app.UseSwaggerUI(swagger =>
             {
-                swagger.SwaggerEndpoint("/swagger/swagger.json", "Store API");
+                swagger.SwaggerEndpoint("/swagger/v1/swagger.json", "Store API");
                 swagger.RoutePrefix = string.Empty;
             });
 
