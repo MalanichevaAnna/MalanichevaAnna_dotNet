@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Fluent;
 using TouristWebAPI.Model;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,15 +16,19 @@ using TouristWebAPI.Model;
 namespace TouristWebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class AcountController : Controller
+    public class AccountController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<AccountController> _logger;
 
-        public AcountController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager)
+        public AccountController(SignInManager<IdentityUser> signInManager, 
+                                UserManager<IdentityUser> userManager,
+                                ILogger<AccountController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _logger = logger;
         }
         [HttpGet]
         public async Task<ActionResult<JwtTokenResult>> Token([FromQuery] Login login)
@@ -40,7 +45,6 @@ namespace TouristWebAPI.Controllers
                                  new Claim(JwtRegisteredClaimNames.Sub, login.Email),
                                  new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                                  new Claim(JwtRegisteredClaimNames.UniqueName, login.Email),
-                                 //new Claim(BuyerClaim.BuyerId, user.BuyerId.ToString()),
                              };
 
                 claims = claims.Concat(roleClaims).ToArray();
@@ -64,7 +68,7 @@ namespace TouristWebAPI.Controllers
             }
             catch (Exception exception)
             {
-                //_logger.LogError($"Error occured during creating token. Exception: {exception.Message}");
+                _logger.LogError($"Error occured during creating token. Exception: {exception.Message}");
                 return BadRequest();
             }
         }
