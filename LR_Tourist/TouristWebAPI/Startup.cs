@@ -1,17 +1,19 @@
+using System.Collections.Generic;
 using System.Reflection;
 using AutoMapper;
 using BLL;
 using DA;
 using DA.Services.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace TouristWebAPI
 {
@@ -40,7 +42,7 @@ namespace TouristWebAPI
                 .AsSelf()
                 .WithTransientLifetime())
             .AddAutoMapper(typeof(MapperProfile));
-
+            services.AddIdentity<IdentityUser, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -65,6 +67,38 @@ namespace TouristWebAPI
                             ValidateIssuerSigningKey = true,
                         };
                     });
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Store Api", Version = "v1" });
+                swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. " +
+                                                                          "\r\n\r\n Enter 'Bearer' [space] and then your token in the text input below." +
+                                                                          "\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                                                      {
+                                                                          {
+                                                                              new OpenApiSecurityScheme
+                                                                              {
+                                                                                  Reference = new OpenApiReference
+                                                                                              {
+                                                                                                  Type = ReferenceType.SecurityScheme,
+                                                                                                  Id = "Bearer"
+                                                                                              },
+                                                                                  Scheme = "oauth2",
+                                                                                  Name = "Bearer",
+                                                                                  In = ParameterLocation.Header
+                                                                              },
+                                                                              new List<string>()
+                                                                          }
+                                                                      });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +113,7 @@ namespace TouristWebAPI
 
             app.UseSwaggerUI(swagger =>
             {
-                swagger.SwaggerEndpoint("/swagger/swagger.json", "Store API v1");
+                swagger.SwaggerEndpoint("/swagger/swagger.json", "Store API");
                 swagger.RoutePrefix = string.Empty;
             });
 
