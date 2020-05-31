@@ -42,8 +42,10 @@ namespace TouristWebAPI
                 .AsSelf()
                 .WithTransientLifetime())
             .AddAutoMapper(typeof(MapperProfile));
-            services.AddIdentity<IdentityUser, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; });
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => { options.Password.RequireNonAlphanumeric = false; })
+                    .AddEntityFrameworkStores<Context>();
+        
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
                         options.RequireHttpsMetadata = false;
