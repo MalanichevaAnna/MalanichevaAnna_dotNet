@@ -19,7 +19,7 @@ namespace TouristConsole
         private readonly UserManagementService serviceUser;
 
         public PresentationMenu(HotelManagementService serviceHotel, ServiceManagementService service, 
-                                StaffManagementService serviceStaff, StaffManagementService serviceTravelVoucher,
+                                StaffManagementService serviceStaff, TravelVoucherManagementService serviceTravelVoucher,
                                 UserManagementService serviceUser)
         {
             this.serviceHotel = serviceHotel;
