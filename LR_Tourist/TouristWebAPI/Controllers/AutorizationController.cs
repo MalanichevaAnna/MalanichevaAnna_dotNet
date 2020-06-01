@@ -16,15 +16,15 @@ using TouristWebAPI.Model;
 namespace TouristWebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    public class AutorizationController : Controller
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<AccountController> _logger;
+        private readonly ILogger<AutorizationController> _logger;
 
-        public AccountController(SignInManager<IdentityUser> signInManager, 
+        public AutorizationController(SignInManager<IdentityUser> signInManager, 
                                 UserManager<IdentityUser> userManager,
-                                ILogger<AccountController> logger)
+                                ILogger<AutorizationController> logger)
         {
             _signInManager = signInManager;
             _userManager = userManager;
