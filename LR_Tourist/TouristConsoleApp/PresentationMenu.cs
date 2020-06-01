@@ -14,7 +14,7 @@ namespace TouristConsole
         
         private readonly StaffManagementService serviceStaff;
         
-        private readonly StaffManagementService serviceTravelVoucher;
+        private readonly TravelVoucherManagementService serviceTravelVoucher;
         
         private readonly UserManagementService serviceUser;
 
