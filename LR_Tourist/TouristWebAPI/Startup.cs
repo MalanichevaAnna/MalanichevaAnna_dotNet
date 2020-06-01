@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Reflection;
 using AutoMapper;
 using BLL;
 using DA;
 using DA.Services.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -12,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 
 namespace TouristWebAPI
 {
@@ -30,7 +26,7 @@ namespace TouristWebAPI
         {
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
-
+     
             var bl = Assembly.Load("BLL");
 
             services
