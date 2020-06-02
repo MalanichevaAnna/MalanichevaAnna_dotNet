@@ -16,11 +16,6 @@ namespace TouristWebAPI
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
-                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-
-                await IdentityInitializer.InitializeAsync(userManager, roleManager);
             }
 
             host.Run();
