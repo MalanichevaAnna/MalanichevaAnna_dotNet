@@ -25,7 +25,7 @@ namespace TouristConsole
                 {
                   // configure Logging with NLog
                     loggingBuilder.ClearProviders();
-                    loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                    loggingBuilder.SetMinimumLevel(LogLevel.Trace);
                     loggingBuilder.AddNLog(configuration);
                 })
                 .AddDbContext<Context>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
